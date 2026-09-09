@@ -19,7 +19,7 @@ export const getUserDataServer = async () => {
     }
 
     try {
-        const response = await axios.get(apiUrl + `/api/getUserData/${lang}`, {
+        const response = await axios.get(apiUrl + `/api/getUserData`, {
             headers: {
                 'authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',

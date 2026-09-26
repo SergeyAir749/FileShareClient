@@ -21,13 +21,17 @@ export async function GET()  {
                 },
             });
 
+            console.log(response);
             console.log(JSON.stringify(response.data));
 
             const res = new NextResponse(JSON.stringify(response.data))
         
             return res;
         } else {
-            return 'сouldNotFindTheServerURL';
+            return NextResponse.json(
+                { error: "сouldNotFindTheServerURL" },
+                { status: 400 }
+            );
         }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

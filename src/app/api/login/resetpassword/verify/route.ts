@@ -29,7 +29,10 @@ export async function POST(
         
             return res;
         } else {
-            return 'сouldNotFindTheServerURL';
+            return NextResponse.json(
+                { error: "сouldNotFindTheServerURL" },
+                { status: 400 }
+            );
         }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -47,11 +47,11 @@ export const signUpServer = async (userData: object) => {
         const response = await axios.post(apiUrl + '/api/signup', userData, { withCredentials: true });
         console.log(response.headers);
 
-        const cookiesStore = await cookies();
+        // const cookiesStore = await cookies();
 
-        const rawCookies = response.headers['set-cookie'];
+        // const rawCookies = response.headers['set-cookie'];
         
-        await cookieSetFunServer(rawCookies)
+        // await cookieSetFunServer(rawCookies)
         
         return response.data
 

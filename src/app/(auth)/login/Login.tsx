@@ -8,9 +8,6 @@ import { useIntl } from 'react-intl';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-import Cookies from 'js-cookie';
-import { loginServer } from './actions';
-
 export default function Login() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -25,8 +22,6 @@ export default function Login() {
     const [loginBy, setLoginBy] = useState('email');
 
     const router = useRouter();
-
-    const apiUrl = process.env.NEXT_PUBLIC_SERVER_API_URL;
 
     const validationInputEmail = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -90,37 +85,25 @@ export default function Login() {
 
             //console.log(userData);
 
-            const data = await loginServer(userData);
-            // console.log('data:', data);
+            const response = await axios.post('/api/login', userData, { withCredentials: true });
+            console.log('data:', response.data);
 
-            // console.log('Token:', response.data.token);
-
-            // Cookies.set('token', response.data.token, {
-            //     // httpOnly: true,
-            //     secure: process.env.NEXT_PUBLIC_SECURE_COOKIE === 'production',
-            //     sameSite: 'lax',
-            //     path: '/',
-            //     expires: 3600000,
-            // });
-
-            // localStorage.setItem('token', response.data.token);
             router.push('/sendfile');
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             closeLoaderFun();
-            console.log(error.message);
-            const serverMessage = error.message;
+            console.log(error);
 
-            if (serverMessage == 'emailNotVerified') {
-                router.push('/signup/email/verification');
-            } else {
-                setError(
-                    intl.formatMessage({
-                        id: `error.massage.${serverMessage}`,
-                        defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
-                    })
-                );
-            }
+            const serverMessage = error.response.data.error || error.message;
+            console.log(serverMessage);
+
+            setError(
+                intl.formatMessage({
+                    id: `error.massage.${serverMessage}`,
+                    defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                })
+            );
         }
     };
 
@@ -129,7 +112,7 @@ export default function Login() {
             <form className={style.formLogin} onSubmit={(e) => submitLoginUser(e)}>
                 <div className={style.formHead}>
                     <div className={style.formIcon}>
-                        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="65" height="65" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M32.8975 15H55.8975C57.5543 15 58.8975 16.3431 58.8975 18V53C58.8975 54.6569 57.5543 56 55.8975 56H32.8975"
                                 stroke="#008CFF"

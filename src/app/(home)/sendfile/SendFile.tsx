@@ -391,9 +391,9 @@ function Sendfile() {
             } catch (error: any) {
                 setProgressBarAggregate(0);
                 closeSubmitFileLoaderFun();
-                console.log(error.message);
 
-                const serverMessage = error.message;
+                const serverMessage = error.response.data.error || error.message;
+                console.log(error);
 
                 setError(
                     intl.formatMessage({

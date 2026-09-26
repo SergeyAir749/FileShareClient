@@ -45,7 +45,9 @@ export default function WhatYouWantToСhoose() {
             showLoaderFun();
 
             if (signUpUserDataParse != null) {
-                const response = await signUpServer(signUpUserDataParse);
+                const response = await axios.post('/api/signup', signUpUserDataParse, {
+                    withCredentials: true,
+                });
                 sessionStorage.removeItem('signUpUserData');
 
                 router.push('/signup/email/verification');
@@ -54,9 +56,9 @@ export default function WhatYouWantToСhoose() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             closeLoaderFun();
-            console.log(error.message);
 
-            const serverMessage = error.message;
+            const serverMessage = error.response.data.error;
+            console.log(error);
 
             setError(
                 intl.formatMessage({

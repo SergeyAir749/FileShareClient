@@ -25,6 +25,10 @@ export const getUserDataServer = async () => {
                 'Content-Type': 'application/json',
             },
         });
+
+        console.log('response:', response);
+        
+
         return response.data
     } catch (error) {
 

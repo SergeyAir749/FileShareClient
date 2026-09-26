@@ -18,6 +18,9 @@ export const cookieSetFunServer = async (arrCookies: string[] | undefined) => {
             throw new Error('cookieNotFound');
         }
 
+        console.log(arrCookies);
+        
+
         for (let i = 0; i < arrCookies.length; i++) {
             const rawCookiesTemp = arrCookies[i].split(';').map(part => part.trim());
             

@@ -17,7 +17,7 @@ export default function Recovering() {
     const [showLoader, setShowLoader] = useState(false);
 
     const [showPasswordStatus, setShowPasswordStatus] = useState('password');
-    const [loginBy, setLoginBy] = useState('username');
+    const [loginBy, setLoginBy] = useState('email');
 
     const router = useRouter();
 
@@ -94,17 +94,16 @@ export default function Recovering() {
 
             //console.log(userData);
 
-            const response = await submitRecoveringUserAccountServer(userData);
-            //console.log('Response:', response);
+            const response = await axios.post('/api/account/recovering', userData, { withCredentials: true });
+            console.log('Response:', response);
             //console.log('Token:', response.data.token);
 
             router.push('/account/recovering/verification');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             closeLoaderFun();
+            const serverMessage = error.response.data.error || error.message;
             console.log(error.message);
-
-            const serverMessage = error.message;
 
             setError(
                 intl.formatMessage({

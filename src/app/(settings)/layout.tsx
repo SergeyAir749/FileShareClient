@@ -40,8 +40,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         const token = localStorage?.getItem('token');
 
         const signupGuest = async () => {
-            const data = await signupGuestServer();
-            console.log(data);
+            // const data = await signupGuestServer();
+            const response = await axios.post('/api/signup/guest', {}, { withCredentials: true });
+            console.log(response);
 
             // localStorage.setItem('token', response.data.token);
             // localStorage.setItem('recoveringGuestToken', response.data.token);
@@ -50,13 +51,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
         const getUserData = async () => {
             try {
-                const data = await getUserDataServer();
-                dispatch(setUserData(data));
+                const response = await axios.get('/api/getUserData');
+                dispatch(setUserData(response.data));
                 dispatch(setAuth());
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                const serverMessage = error.message;
-                console.log(serverMessage);
+                const serverMessage = error.response.data.error;
+                console.log(error);
 
                 // if (serverMessage == 'Не удалось войти в аккаунт') {
                 //     signupGuest();

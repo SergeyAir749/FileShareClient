@@ -8,7 +8,7 @@
     background-color: var(--color-gray-900);
 }
 
-.formLogin {
+.formAccounRecoveringEmailVerification {
     position: relative;
     display: flex;
     width: 500px;
@@ -319,7 +319,7 @@
 
 
 @media (max-width: 500px) {
-    .formLogin {
+    .formAccounRecoveringEmailVerification {
         width: 100%;
         border: none;
         border-radius: 0px;
@@ -341,7 +341,7 @@
 
 /* @media (max-width: 380px) {
 
-    .formLogin {
+    .formAccounRecoveringEmailVerification {
         padding: 30px;
         padding-top: 50px;
     }
@@ -350,7 +350,7 @@
 
 @media (max-width: 320px) {
 
-    .formLogin {
+    .formAccounRecoveringEmailVerification {
         padding: 30px;
         padding-top: 50px;
     }

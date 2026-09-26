@@ -165,7 +165,8 @@ export default function Signup() {
 
                 if (errorValidation == '') {
                     if (isGuest == false) {
-                        const response = await signUpServer(userData);
+                        // const response = await signUpServer(userData);
+                        const response = await axios.post('/api/signup', userData, { withCredentials: true });
                         router.push('/signup/email/verification');
                     } else {
                         const response = await isUserInDBServer(userData);
@@ -178,9 +179,9 @@ export default function Signup() {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 closeLoaderFun();
-                console.log(error.message);
 
-                const serverMessage = error.message;
+                const serverMessage = error.response.data.error || error.message;
+                console.log(error);
 
                 setError(
                     intl.formatMessage({

@@ -114,7 +114,10 @@ export default function ResetPasswordVerification() {
 
                 //console.log(codeObj);
 
-                const response = await submitResetPasswordVerifyServer(codeObj);
+                const response = await axios.post('/api/login/resetpassword/verify', codeObj, {
+                    withCredentials: true,
+                    headers: { 'Content-Type': 'application/json' },
+                });
                 //console.log('Response:', response);
                 sessionStorage.removeItem('userEmail');
 

@@ -45,8 +45,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         // const token = localStorage?.getItem('token');
 
         const signupGuest = async () => {
-            const data = await signupGuestServer();
-            console.log(data);
+            // const data = await signupGuestServer();
+            const response = await axios.post('/api/signup/guest', {}, { withCredentials: true });
+            console.log(response);
 
             // const response = await axios.post(apiUrl + '/api/signup/guest');
             // localStorage.setItem('token', response.data.token);
@@ -59,15 +60,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 //console.log('Response:', response.data);
 
                 // if (token != null) {
-                const data = await getUserDataServer();
-                dispatch(setUserData(data));
+                const response = await axios.get('/api/getUserData');
+
+                console.log(response);
+
+                dispatch(setUserData(response.data));
                 dispatch(setAuth());
                 // }
 
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                const serverMessage = error.message;
-                console.log(serverMessage);
+                const serverMessage = error.response.data.error || error.message;
+                console.log(error);
                 // console.log('Client caught error:', error.message);
 
                 console.log(serverMessage == 'UnableToSignInToTheAccount');

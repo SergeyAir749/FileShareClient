@@ -60,16 +60,18 @@ export default function RecoveringEmailVerification() {
 
             //console.log(codeObj);
 
-            const response = await submitRecoveringAccountUserEmailVerifyServer(codeObj);
+            const response = await axios.post('/api/account/recovering/verification', codeObj, {
+                withCredentials: true,
+            });
             //console.log('Response:', response);
 
             location.pathname = '/account/recovering/successfully';
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             closeLoaderFun();
-            console.log(error.message);
 
-            const serverMessage = error.message;
+            const serverMessage = error.response.data.error || error.message;
+            console.log(error.message);
 
             setError(
                 intl.formatMessage({
@@ -130,7 +132,10 @@ export default function RecoveringEmailVerification() {
 
     return (
         <div className={style.accounRecoveringEmailVerification}>
-            <form className={style.formLogin} onSubmit={(e) => submitRecoveringAccountUserEmailVerify(e)}>
+            <form
+                className={style.formAccounRecoveringEmailVerification}
+                onSubmit={(e) => submitRecoveringAccountUserEmailVerify(e)}
+            >
                 <div className={style.formHead}>
                     <div className={style.formIcon}>
                         <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import axios from 'axios';
 
+// Так как данный роут тоже принемает куки с срвера его прешлось перенести в /api
+
 export async function GET()  {
 
     const apiUrl = process.env.NEXT_PUBLIC_SERVER_API_URL;
@@ -22,6 +24,20 @@ export async function GET()  {
             });
 
             console.log(response);
+            
+            const headers = new Headers([])
+
+            const cookie = response.headers['set-cookie']
+
+            if (cookie != undefined) {
+
+                for (let i = 0; i < cookie.length; i++) {
+                    const element = cookie[i];
+                    console.log(['Set-Cookie', element]);
+                    headers.append('Set-Cookie', element)
+                }
+            }
+
             console.log(JSON.stringify(response.data));
 
             const res = new NextResponse(JSON.stringify(response.data))
@@ -39,16 +55,29 @@ export async function GET()  {
         const status = error.response?.status || 500;
         const message = error.response?.data?.msg || error.message;
 
+
+        console.log('==================================================');
         console.log(error.response);
+        console.log('==================================================');
+
         console.log(message);
         
         if (message == 'invalid token') {
             return NextResponse.json({ error: 'UnableToSignInToTheAccount'}, { status });
         } else if (message == 'emailNotVerified') {
             
-            const headers = new Headers([
-                ['Set-Cookie', `token=${error.response?.data?.token}; HttpOnly; Secure; SameSite=Lax; Path=/`]
-            ])
+            const headers = new Headers([])
+
+            const cookie = error.response.headers['set-cookie']
+
+            if (cookie != undefined) {
+
+                for (let i = 0; i < cookie.length; i++) {
+                    const element = cookie[i];
+                    console.log(['Set-Cookie', element]);
+                    headers.append('Set-Cookie', element)
+                }
+            }
             
             const res = NextResponse.json({ error: message }, { status: 400, headers: headers })
 

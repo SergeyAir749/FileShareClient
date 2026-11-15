@@ -89,7 +89,7 @@
 }
 
 .error {
-    color: rgb(255, 137, 137);
+    color: var(--color-red-100);
 }
 
 
@@ -194,18 +194,19 @@
 .fileItem {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
     padding: 20px;
     background-color: var(--color-gray-900);
     border-radius: 15px;
     gap: 10px;
+    position: relative;
 }
 
 .fileBlock {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: space-between;
     flex-shrink: 5;
     width: 100%;
     gap: 10px;
@@ -242,12 +243,98 @@
     flex-shrink: 0;
 }
 
+.fileNameBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .fileName {
     display: flex;
     flex-shrink: 0;
     color: var(--color-text);
     word-break: break-all;
 }
+
+.fileMain {
+    display: flex;
+    gap: 10px;
+}
+
+.fileAdditionally {
+    flex-shrink: 0;
+}
+
+.openFileAdditionallyMenu {
+    background: none;
+    border: none;
+    display: flex;
+}
+
+.fileAdditionallyMenuPopUp {
+    position: absolute;
+    width: 200px;
+    height: 42px;
+    background-color: var(--color-gray-500);
+    border-radius: 15px;
+    bottom: 120px;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+}
+
+.fileAdditionallyMenuPopUpShow {
+    opacity: 1;
+    visibility: visible;
+}
+
+.buttonFileStoryAdditionallyMenuOption {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: start;
+    padding: 11px 14px;
+    color: var(--color-text);
+    background-color: var(--color-gray-500);
+    transition: 0.2s all;
+    font-size: 16px;
+}
+
+.buttonFileStoryAdditionallyMenuOption:hover {
+    background-color: var(--color-gray-400);
+}
+
+.buttonFileStoryAdditionallyMenuOption:active {
+    background-color: var(--color-gray-500);
+}
+
+.buttonFileDeleteStoryAdditionallyMenuOption  {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: start;
+    padding: 11px 14px;
+    background-color: var(--color-gray-500);
+    color: var(--color-red-200);
+    transition: 0.2s all;
+    font-size: 16px;
+}
+
+.buttonFileDeleteStoryAdditionallyMenuOption:hover  {
+    background-color: var(--color-red-400);
+    color: var(--color-width);
+}
+
+.buttonFileDeleteStoryAdditionallyMenuOption:active  {
+    background-color: var(--color-gray-500);
+    color: var(--color-red-200);
+}
+
+
 
 .metaData {
     font-size: 14px;
@@ -270,12 +357,26 @@
 } */
 
 .textBlock {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-shrink: 5;
+    width: 100%;
+    gap: 10px;
+}
+
+.textMain {
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid rgb(125, 125, 125);
-    color: var(--color-text);
+    background-color: var(--color-gray-500);
     word-break: break-all;
     border-radius: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.textMain span {
+    color: var(--color-text);
 }
 
 .textInfo {
@@ -315,12 +416,40 @@
 }
 
 .buttonFileDeleteStory:hover {
-    background-color: var(--color-red-400);
+    background-color:  var(--color-red-400);
 }
 
 .buttonFileDeleteStory:active {
-    background-color: var(--color-red-300);
+    background-color:  var(--color-red-300);
 }
+
+
+.buttonFileCancelSend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-500);
+    border: none;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 10px 20px;
+    transition: 0.2s all ;
+    outline: none;
+    gap: 5px;
+}
+
+.buttonFileCancelSend:hover {
+    background-color: var(--color-gray-600);
+}
+
+.buttonFileCancelSend:active {
+    background-color: var(--color-gray-500);
+}
+
+
+
 
 
 
@@ -362,6 +491,16 @@
     width: 100%;
     height: 100vh;
     background-color: var(--color-black-transparent-45);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+    z-index: 9999;
+}
+
+.filtersStoryPopUpBackgroundShow {
+    opacity: 1;
+    visibility: visible;
 }
 
 .filtersStoryPopUp {
@@ -372,7 +511,7 @@
     height: 550px;
     padding: 10px;
     background-color: var(--color-gray-700);
-    border: 1px solid var(--color-gray-600);
+    border: 1px solid var(--color-gray-950);
     border-radius: 20px;
 }
 
@@ -476,6 +615,16 @@
     width: 100%;
     height: 100vh;
     background-color: var(--color-black-transparent-45);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+    z-index: 9999;
+}
+
+.settingsStoryPopUpBackgroundShow {
+    opacity: 1;
+    visibility: visible;
 }
 
 .settingsStoryPopUp {
@@ -486,7 +635,7 @@
     height: 550px;
     padding: 10px;
     background-color: var(--color-gray-700);
-    border: 1px solid var(--color-gray-600);
+    border: 1px solid var(--color-gray-950);
     border-radius: 20px;
 }
 
@@ -561,6 +710,16 @@
     width: 100%;
     height: 100vh;
     background-color: var(--color-black-transparent-45);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+    z-index: 9999;
+}
+
+.messageDeleteStoryPopUpBackgroundShow {
+    opacity: 1;
+    visibility: visible;
 }
 
 .messageDeleteStoryPopUp {
@@ -570,7 +729,7 @@
     width: 350px;
     padding: 20px;
     background-color: var(--color-gray-700);
-    border: 1px solid var(--color-gray-600);
+    border: 1px solid var(--color-gray-950);
     border-radius: 20px;
 }
 
@@ -589,8 +748,9 @@
     color: var(--color-text);
 }
 
-.messageDeleteStoryPopUpHeader span {
-    color: var(--color-text);
+.messageDeleteFileStoryPopUpFilename {
+    padding-top: 5px;
+    color: var(--color-gray-150) !important; 
 }
 
 .messageDeleteStoryPopUpOptions {
@@ -625,7 +785,158 @@
 }
 
 
+.messageDeletePopUpOptionButtonСancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-red-500);
+    border: none;
+    color: var(--color-width);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 10px 15px;
+    transition: 0.2s all ;
+    outline: none;
+    gap: 5px;
+    /* width: 100%; */
+}
 
+.messageDeletePopUpOptionButtonСancel:hover {
+    background-color: var(--color-red-600);
+}
+
+.messageDeletePopUpOptionButtonСancel:active {
+    background-color: var(--color-red-500);
+}
+
+
+
+
+
+
+
+
+/* messageDeleteFileStoryPopUp */
+
+.messageDeleteFileStoryPopUpBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-black-transparent-45);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+    z-index: 9999;
+}
+
+.messageDeleteFileStoryPopUpBackgroundShow {
+    opacity: 1;
+    visibility: visible;
+}
+
+.messageDeleteFileStoryPopUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 350px;
+    padding: 20px;
+    background-color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-950);
+    border-radius: 20px;
+}
+
+.messageDeleteFileStoryPopUpHeader {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    gap: 20px;
+}
+
+.messageDeleteFileStoryPopUpHeader h2 {
+    font-size: 20px;
+    color: var(--color-text);
+}
+
+.messageDeleteFileStoryPopUpHeader span {
+    color: var(--color-gray-150);
+}
+
+.messageDeleteFileStoryPopUpOptions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.messageDeleteFileStoryPopUpOptionButtonСancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-red-500);
+    border: none;
+    color: var(--color-width);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 10px 15px;
+    transition: 0.2s all ;
+    outline: none;
+    gap: 5px;
+    /* width: 100%; */
+}
+
+.messageDeleteFileStoryPopUpOptionButtonСancel:hover {
+    background-color: var(--color-red-600);
+}
+
+.messageDeleteFileStoryPopUpOptionButtonСancel:active {
+    background-color: var(--color-red-500);
+}
+
+
+
+
+.messageDeleteFileStoryPopUpOptionButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-600);
+    border: none;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 10px 15px;
+    transition: 0.2s all ;
+    outline: none;
+    gap: 5px;
+    /* width: 100%; */
+}
+
+.messageDeleteFileStoryPopUpOptionButton:hover {
+    background-color: var(--color-gray-500);
+}
+
+.messageDeleteFileStoryPopUpOptionButton:active {
+    background-color: var(--color-gray-600);
+}
+
+
+
+
+.filesDelete {
+    background-color: var(--color-red-500);
+    color: #ffffff;
+}
 
 .filesAllDelete {
     background-color: var(--color-red-500);
@@ -751,7 +1062,7 @@
 
 }
 
-@media (max-width: 380px) {
+@media (max-width: 390px) {
 
     .settingsStoryPopUpBackground {
         padding-top: 0px;
@@ -772,4 +1083,8 @@
         border-radius: 0px;
     }
 
+    .fileStoryViewBlock {
+        padding: 0px 10px;
+    }
 }
+

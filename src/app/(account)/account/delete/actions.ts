@@ -39,14 +39,14 @@ export const verifyAccountDeleteSessionServer = async () => {
     }
 };
 
-export const submitAccountDeleteServer = async () => {
+export const submitAccountDeleteServer = async (session: object) => {
     const cookiesStore = await cookies();
     const token = cookiesStore.get("token")?.value;
 
     try {
-        const response = await axios.delete(
-            apiUrl + '/api/account/delete',
-
+        const response = await axios.post(
+            apiUrl + '/api/account/delete', 
+            session,
             {
                 headers: {
                     authorization: `Bearer ${token}`,

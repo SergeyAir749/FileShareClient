@@ -1,0 +1,52 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_223_516)">
+        <circle cx="25" cy="25" r="22.5" stroke="#21487A" stroke-width="5"/>
+        <circle class="animation" cx="25" cy="25" r="22.5" stroke="#C7E6FF" stroke-width="5"/>
+    </g>
+    <defs>
+        <clipPath id="clip0_223_516">
+            <rect width="50" height="50" fill="white"/>
+        </clipPath>
+    </defs>
+
+    <style>
+
+        svg {
+            transform: rotate(360deg) scaleX(-1);
+            animation: routeSvg 2s infinite;
+        }
+
+        .animation {
+            animation: route 2s infinite;
+            stroke-dasharray: 500; /* Длина окружности (2 * pi * r) */
+            stroke-dashoffset: 500; /* Начальное состояние (пусто) */
+            transition: stroke-dashoffset 0.1s ease;
+            fill: none;
+            stroke-linecap: round;
+            animation-duration: 2s;
+        }
+
+        @keyframes route {
+            0% {
+                stroke-dashoffset: 500;
+            }
+            50% {
+                stroke-dashoffset: 420;
+            }
+            100% {
+                stroke-dashoffset: 500;
+            }
+        }
+
+        @keyframes routeSvg {
+            0% {
+                transform: rotate(0deg) scaleX(-1);
+            }
+            100% {
+                transform: rotate(360deg) scaleX(-1);
+            }
+        }
+
+    </style>
+</svg>
+ 

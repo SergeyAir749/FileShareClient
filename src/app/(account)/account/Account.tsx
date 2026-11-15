@@ -31,6 +31,29 @@ export default function Account() {
     const { isAuth, userData } = useAppSelector((state) => state.authReducer);
     const router = useRouter();
 
+    const linkList = [
+        {
+            link: 'account/change/email',
+            text: intl.formatMessage({ id: 'account.accountSetting.link.change.email' }),
+        },
+        {
+            link: 'account/change/name',
+            text: intl.formatMessage({ id: 'account.accountSetting.link.change.name' }),
+        },
+        {
+            link: 'account/change/password',
+            text: intl.formatMessage({ id: 'account.accountSetting.link.change.password' }),
+        },
+        {
+            link: 'account/twoFactorAuth',
+            text: intl.formatMessage({ id: 'account.accountSetting.link.change.twoFactorAuth' }),
+        },
+        {
+            link: 'account/delete/verification',
+            text: intl.formatMessage({ id: 'account.accountSetting.link.change.delete' }),
+        },
+    ];
+
     const showSubmitLoaderFun = () => {
         setSubmitLoader(true);
     };
@@ -154,8 +177,8 @@ export default function Account() {
     };
 
     const logOutFun = async () => {
-        await logOutFunServer();
-        router.push('/sendfile');
+        console.log(await logOutFunServer());
+        location.pathname = '/sendfile';
     };
 
     const buttonBackPage = () => {
@@ -338,7 +361,39 @@ export default function Account() {
 
                         <div className={style.accountSetting}>
                             <div className={style.links}>
-                                <Link className={style.link} href={'account/change/email'}>
+                                {linkList.map((item, index) =>
+                                    index != linkList.length - 1 && item.link != 'account/delete/verification' ? (
+                                        <Link key={index} className={style.link} href={item.link}>
+                                            {item.text}
+                                        </Link>
+                                    ) : index != linkList.length - 1 && item.link == 'account/delete/verification' ? (
+                                        <Link
+                                            key={index}
+                                            className={`${style.colorRed} ${style.link}`}
+                                            href={item.link}
+                                        >
+                                            {item.text}
+                                        </Link>
+                                    ) : index == linkList.length - 1 && item.link == 'account/delete/verification' ? (
+                                        <Link
+                                            key={index}
+                                            className={`${style.linkNoBorder} ${style.colorRed} ${style.link}`}
+                                            href={item.link}
+                                        >
+                                            {item.text}
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            key={index}
+                                            className={`${style.linkNoBorder} ${style.link}`}
+                                            href={item.link}
+                                        >
+                                            {item.text}
+                                        </Link>
+                                    )
+                                )}
+
+                                {/* <Link className={style.link} href={'account/change/email'}>
                                     {intl.formatMessage({ id: 'account.accountSetting.link.change.email' })}
                                 </Link>
                                 <Link className={style.link} href={'account/change/name'}>
@@ -352,7 +407,7 @@ export default function Account() {
                                     href={'account/delete/verification'}
                                 >
                                     {intl.formatMessage({ id: 'account.accountSetting.link.change.delete' })}
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
 

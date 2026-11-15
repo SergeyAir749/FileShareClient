@@ -57,12 +57,20 @@
     /* background-color: #0e0e0e; */
     backdrop-filter: saturate(1.5) blur(40px);
     background-color: var(--burger-menu-background);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s all;
+}
+
+.burgerMenuBackgroundOpen {
+    opacity: 1;
+    visibility: visible;
 }
 
 .burgerMenu {
     width: 500px;
-    padding: 0px 40px;
-    padding-top: 20px;
+    padding: 0px 30px;
+    padding-top: 30px;
     height: 100%;
 }
 
@@ -81,7 +89,7 @@
 .burgerMenuHead {
     display: flex;
     justify-content: space-between;
-    padding: 20px 0px;
+    padding-bottom: 20px;
 }
 
 .burgerMenuTitle {
@@ -110,7 +118,7 @@
 
 .userData {
     display: flex;
-    padding: 5px;
+    padding-top: 7px;
     gap: 15px;
 }
 

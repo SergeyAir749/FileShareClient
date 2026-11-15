@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import style from '@/style/signup.module.css';
@@ -7,10 +8,10 @@ import axios from 'axios';
 import Link from 'next/link';
 import { isGuestFunServer, isUserInDBServer, signUpServer } from './actions';
 import Cookies from 'js-cookie';
+import { Loading } from '@/components/loader';
 
 export default function Signup() {
     const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
 
@@ -33,6 +34,16 @@ export default function Signup() {
     const router = useRouter();
 
     const apiUrl = process.env.NEXT_PUBLIC_SERVER_API_URL;
+
+    useEffect(() => {
+        if (document.readyState === 'complete') {
+            setShowLoader(false);
+            return;
+        } else {
+            setShowLoader(true);
+            return;
+        }
+    }, []);
 
     useEffect(() => {
         const isGuestFun = async () => {
@@ -75,20 +86,6 @@ export default function Signup() {
         }
 
         setEmail(value);
-        closeLoaderFun();
-    };
-
-    const validationInputUserName = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        //console.log(usernameRegexp.test(value));
-
-        if (usernameRegexp.test(value) == true) {
-            setErrorValidation('');
-        } else {
-            setErrorValidation(intl.formatMessage({ id: 'signup.input.validation.username.error' }));
-        }
-
-        setUsername(value);
         closeLoaderFun();
     };
 
@@ -158,24 +155,28 @@ export default function Signup() {
 
                 const userData = {
                     email: email,
-                    username: username,
                     password: password,
                     lang: lang,
                 };
 
-                if (errorValidation == '') {
-                    if (isGuest == false) {
-                        // const response = await signUpServer(userData);
-                        const response = await axios.post('/api/signup', userData, { withCredentials: true });
-                        router.push('/signup/email/verification');
-                    } else {
-                        const response = await isUserInDBServer(userData);
-                        sessionStorage?.setItem('signUpUserData', JSON.stringify(userData));
-                        router.push('/signup/whatyouwanttochoose');
-                    }
-                } else {
-                    closeLoaderFun();
-                }
+                // if (errorValidation == '') {
+                //     if (isGuest == false) {
+                //         // const response = await signUpServer(userData);
+                //         const response = await axios.post('/api/signup', userData, { withCredentials: true });
+                //         router.push('/signup/email/verification');
+                //     } else {
+                //         const response = await isUserInDBServer(userData);
+                //         sessionStorage?.setItem('signUpUserData', JSON.stringify(userData));
+                //         router.push('/signup/whatyouwanttochoose');
+                //     }
+                // } else {
+                //     closeLoaderFun();
+                // }
+
+                sessionStorage.setItem('signUpUserData', JSON.stringify(userData));
+
+                router.push('/signup/username');
+
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 closeLoaderFun();
@@ -235,15 +236,6 @@ export default function Signup() {
                         type="email"
                         name="email"
                         id="email"
-                        required
-                    />
-                    <input
-                        className={style.inputStyle}
-                        onChange={(e) => validationInputUserName(e)}
-                        placeholder={intl.formatMessage({ id: 'signup.input.username' })}
-                        type="text"
-                        name="username"
-                        id="username"
                         required
                     />
                     <div className={style.passwordBlock}>
@@ -343,28 +335,7 @@ export default function Signup() {
                 {showLoader ? (
                     <div className={style.formLoaderBackground}>
                         <div className={style.formLoader}>
-                            <svg
-                                width="60"
-                                height="60"
-                                className={style.formLoaderImg}
-                                viewBox="0 0 50 50"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <g clipPath="url(#clip0_223_516)">
-                                    <circle cx="25" cy="25" r="22.5" stroke="var(--color-blue-900)" strokeWidth="5" />
-                                    <path
-                                        d="M34.5524 45.3716C35.1386 46.6217 34.6033 48.1232 33.3009 48.5817C29.1743 50.0343 24.7234 50.3834 20.3948 49.5722C15.2442 48.6069 10.5271 46.0475 6.91016 42.2557C3.29318 38.4638 0.959162 33.6313 0.237921 28.4408C-0.368215 24.0788 0.19048 19.6493 1.83617 15.5958C2.35556 14.3165 3.88066 13.8527 5.10172 14.4972V14.4972C6.32277 15.1417 6.77389 16.6504 6.28665 17.9423C5.1119 21.0571 4.72854 24.4293 5.19034 27.7527C5.76733 31.905 7.63454 35.7711 10.5281 38.8045C13.4217 41.838 17.1954 43.8855 21.3159 44.6578C24.6137 45.2758 28.0003 45.052 31.1671 44.0255C32.4805 43.5997 33.9662 44.1215 34.5524 45.3716V45.3716Z"
-                                        fill="var(--color-blue-300)"
-                                    />
-                                </g>
-
-                                <defs>
-                                    <clipPath id="clip0_223_516">
-                                        <rect width="50" height="50" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
+                            <Loading />
                         </div>
                     </div>
                 ) : (

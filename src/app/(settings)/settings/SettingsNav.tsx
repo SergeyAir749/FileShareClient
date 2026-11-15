@@ -11,6 +11,17 @@ export default function settingsNav() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const intl = useIntl();
 
+    const linkList = [
+        {
+            link: '/settings/main',
+            text: intl.formatMessage({ id: 'settingsNav.link.main' }),
+        },
+        {
+            link: '/settings/decor',
+            text: intl.formatMessage({ id: 'settingsNav.link.decor' }),
+        },
+    ];
+
     const buttonBackPage = () => {
         router.push('/sendfile');
     };
@@ -42,12 +53,24 @@ export default function settingsNav() {
             <main>
                 <div className={style.settingLinks}>
                     <div className={style.links}>
-                        <Link className={style.link} href={'/settings/main'}>
+                        {linkList.map((item, index) =>
+                            index != linkList.length - 1 ? (
+                                <Link key={index} className={style.link} href={item.link}>
+                                    {item.text}
+                                </Link>
+                            ) : (
+                                <Link key={index} className={`${style.linkNoBorder} ${style.link}`} href={item.link}>
+                                    {item.text}
+                                </Link>
+                            )
+                        )}
+
+                        {/* <Link className={style.link} href={'/settings/main'}>
                             {intl.formatMessage({ id: 'settingsNav.link.main' })}
                         </Link>
                         <Link className={style.link} href={'/settings/decor'}>
                             {intl.formatMessage({ id: 'settingsNav.link.decor' })}
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </main>

@@ -31,15 +31,14 @@
   "sendfilePage.inputTextTextarea": "Введите текст...",
   "sendfilePage.inputSelectFile": "Выбрать файл",
 
-  "sendfilePage.inputDeviceID": "ID Устройства",
+  "sendfilePage.inputDeviceID": "ID Получателя",
 
   "sendfilePage.messageWhatDeviceIDBlock.1": "1. Откройте сайт",
-  "sendfilePage.messageWhatDeviceIDBlock.1.5": "на другом устройстве",
-  "sendfilePage.messageWhatDeviceIDBlock.2": "2. Нажмите на кнопку \"Получить\" она находится снизу экрана рядом с кнопкой \"Отправить\"",
-  "sendfilePage.messageWhatDeviceIDBlock.3": "3. На странице получить найдите строчку \"ID Вашего устройства\" и введите код ниже в это поле",
-  "sendfilePage.messageWhatDeviceIDBlock.4.file": "4. На этом устройстве выберите файлы который хотите отправить и нажимайте на кнопку \"Отправить\"",
-  "sendfilePage.messageWhatDeviceIDBlock.4.text": "4. На этом устройстве введите текст который хотите отправить и нажимайте на кнопку \"Отправить\"",
-  "sendfilePage.messageWhatDeviceIDBlock.5": "5. Дождитесь конца загрузки, файлы должны отабразится на другом устройстве",
+  "sendfilePage.messageWhatDeviceIDBlock.1.5": "на устройстве на который хотите отправить файл или текст.",
+  "sendfilePage.messageWhatDeviceIDBlock.2": "2. Найдите строчку \"ID Для получения\" и введите код находящийся ниже в это поле.",
+  "sendfilePage.messageWhatDeviceIDBlock.3.file": "3. На этом устройстве выберите файлы который хотите отправить и нажимайте на кнопку \"Отправить\".",
+  "sendfilePage.messageWhatDeviceIDBlock.3.text": "3. На этом устройстве введите текст который хотите отправить и нажимайте на кнопку \"Отправить\".",
+  "sendfilePage.messageWhatDeviceIDBlock.4": "4. Дождитесь конца загрузки, файлы должны отабразится на другом устройстве.",
 
 
 
@@ -90,7 +89,7 @@
   "getfilePage.formTitleH2": "Получить файл",
   "getfilePage.formDescriptionP": "Здесь вы можете принять файлы с других устройств",
 
-  "getfilePage.yourDeviceID": "ID Вашего устройства",
+  "getfilePage.yourDeviceID": "ID Для получения",
   "getfilePage.loding": "Загрузка",
   "getfilePage.yourDeviceID.copy.click": "ID скопирован!",
 
@@ -239,6 +238,11 @@
   "getFileStory.messageDeleteStoryPopUp.delete": "Удалить",
   "getFileStory.messageDeleteStoryPopUp.cancel": "Отмена",
 
+  "getFileStory.messageDeleteFileStoryPopUpH2": "Удалить файл",
+  "getFileStory.messageDeleteFileStoryPopUpSpan": "Удалить файл из истории",
+  "getFileStory.messageDeleteFileStoryPopUp.delete": "Удалить",
+  "getFileStory.messageDeleteFileStoryPopUp.cancel": "Отмена",
+
   "getFileStory.filtersStoryPopUpH2": "Фильтры",
   
   "getFileStory.selectOptionfilters.all": "Все",
@@ -274,9 +278,43 @@
   "login.link.noAccountRegistration": "Нет акаунта регистрация",
   "login.link.recoverAccount": "Восстановить аккаунт?",
   "login.link.forgotYourPassword": "Забыли пароль?",
+  "login.link.byQRCode": "Войти по QR-Коду",
+
+
+  "twoFactorAuthLogin.page.title": "Двухфакторная аутентификация",
+  "twoFactorAuthLogin.page.description": "Двухфакторная аутентификация",
+  
+  "twoFactorAuthLogin.formTitleH2": "Двухфакторная аутентификация",
+  "twoFactorAuthLogin.formDescriptionP": "Введите код из эл. почты чтобы подтвердить что это вы",
+
+  "twoFactorAuthLogin.input.enterTheCodeFromTheEmail": "Введите код из эл. почты",
+  "twoFactorAuthLogin.message.getNewCode": "Новый код отправлен",
+
+  "twoFactorAuthLogin.button.submit": "Отправить код",
+  "twoFactorAuthLogin.button.getNewCode": "Получить новый код",
+  "twoFactorAuthLogin.button.cancel": "Отмена",
 
 
 
+
+
+
+  "QRCodeLoginGet.page.title": "Вход по QR-Коду",
+  "QRCodeLoginGet.formTitleH2": "Вход по QR-Коду",
+  "QRCodeLoginGet.formDescriptionP": "Отсканируйте QR-Код с тельфона и выполните вход",
+
+  "QRCodeLoginGet.link.signup": "Нет акаунта регистрация",
+  "QRCodeLoginGet.link.login": "Войти по логину и паролю",
+
+  "QRCodeLoginGet.greetings": "Здравствуйте ",
+
+
+  "QRCodeLoginSend.page.title": "Вход по QR-Коду",
+  "QRCodeLoginSend.formTitleH2": "Вход по QR-Коду",
+  "QRCodeLoginSend.formDescriptionP": "Вы хотите войти в свой аккаунт на устройстве:",
+  "QRCodeLoginSend.slideForOverLogin": "Проведите полосу до конца чтобы войти",
+  "QRCodeLoginSend.inputRadiusLoginSuccessful.text": "Вход выполнен",
+  "QRCodeLoginSend.LoginSuccessful": "Вход выполнен, страницу можно закрыть",
 
 
   
@@ -337,6 +375,13 @@
 
 
 
+  "signupUserName.page.title": "Регистрация",
+
+  "signupUserName.formTitleH2": "Введите имя пользователя",
+
+  "signupUserName.input.username": "Имя", 
+  "signupUserName.input.surname": "Фамилия (Необязательно)", 
+  "signupUserName.button.submit": "Продолжить",
 
 
   
@@ -353,6 +398,11 @@
   "signupEmail.button.cancel": "Отмена",
 
 
+
+
+
+
+  
 
 
 
@@ -438,8 +488,8 @@
   "settings.date.option.value.12": "12 - часовой",
   "settings.date.option.value.23": "24 - часовой",
 
-  "settings.languages.option.value.ru": "Русский - Russian",
-  "settings.languages.option.value.en": "Английский - English",
+  "settings.languages.option.value.ru": "Русский",
+  "settings.languages.option.value.en": "English",
 
 
 
@@ -495,6 +545,7 @@
   "account.accountSetting.link.change.email": "Изменить адрес эл. почты",
   "account.accountSetting.link.change.name": "Изменить имя пользователя",
   "account.accountSetting.link.change.password": "Изменить пароль",
+  "account.accountSetting.link.change.twoFactorAuth": "Двухфакторная аутентификация",
   "account.accountSetting.link.change.delete": "Удалить аккаунт",
 
   "account.accountSetting.link.logout": "Выход",
@@ -507,7 +558,7 @@
   "changeEmail.page.title": "Изменить адрес эл. почты",
 
   "changeEmail.headerTitleH2": "Изменить адрес эл. почты",
-  "changeEmail.headerDescriptionP": "Введите новый адрес эл. почты",
+  "changeEmail.formDescriptionP": "Введите новый адрес эл. почты",
 
   "changeEmail.input.email": "Изменить адрес эл. почты",
   "changeEmail.input.validation.email": "Почта должна состоять от 3 символов, содержать символ @",
@@ -559,6 +610,33 @@
   "changeUserName.button.cancel": "Отмена",
 
 
+
+
+  "twoFactorAuthVerification.page.title": "Введите пароль чтобы продолжить",
+
+  "twoFactorAuthVerification.formTitleH2": "Введите пароль чтобы продолжить",
+  "twoFactorAuthVerification.formDescriptionP": "Подтвердите, что это ваш аккаунт",
+  
+  "twoFactorAuthVerification.input.password": "Пароль",
+
+  "twoFactorAuthVerification.button.submit": "Продолжить",
+  "twoFactorAuthVerification.button.cancel": "Отмена",
+
+
+  "twoFactorAuth.page.title": "Двухфакторная аутентификация",
+
+  "twoFactorAuth.formTitleH2": "Двухфакторная аутентификация",
+  "twoFactorAuth.formDescriptionP": "Двухфакторная аутентификация может обеспечить дополнительную безопасность для вашего аккаунта, после вкючения вход в аккаунт будет проходить в два этапа. 1. Вводите почту и пароль 2. Вводите код из письма которое придёт вам на почту указанную в аккаунта",
+
+  "twoFactorAuth.info.warning.title": "Внимательно прочтите это перед тем как удалить аккаунта",
+  "twoFactorAuth.info.warning.info": "Ваш аккаунт, отправленные вам файлы и история, будет навсегда удален, отменить удаление можно в течение 14 дней",
+  
+  "twoFactorAuth.button.submit.on.true": "Включить",
+  "twoFactorAuth.button.submit.on.false": "Выключить",
+  "twoFactorAuth.button.cancel": "Отмена",
+
+  "twoFactorAuth.status.true": "Двухфакторная аутентификация включено",
+  "twoFactorAuth.status.false": "Двухфакторная аутентификация выключено",
 
 
 
@@ -711,7 +789,7 @@
 
   
   "error.massage.invalidUserID": "Неверный ID или этого аккаунта не существует",
-  "error.massage.deviceIDDoNotMatch": "ID устройств не совпадают",
+  "error.massage.deviceIDDoNotMatch": "ID Получателя не совпадают",
 
   "error.massage.fileNotFound": "Файл не найден",
   "error.massage.textNotFound": "Текст не найден",
@@ -738,7 +816,7 @@
   "error.massage.accountDeleted": "Аккаунт удалён",
 
 
-
+  "error.massage.sessionError": "Ошибка сессии",
 
 
 
@@ -757,6 +835,13 @@
   "userIsDelete.username": "Удалённый аккаунт",
 
   "file.notFound": "Файлов нет",
+  "file.fileWillBeDeleted": "Файл будет удалён через 14 дней",
+
+
+
+
+  "pageNotFound": "Страница не найдена",
+
 
 
   

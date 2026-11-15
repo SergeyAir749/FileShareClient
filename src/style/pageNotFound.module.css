@@ -1,0 +1,384 @@
+.home {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+    /* overflow-y: scroll; */
+    position: absolute;
+    scrollbar-color: #898989 var(--color-bg); /* Цвет ползунка и дорожки */
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--color-bg);
+    padding: 10px 20px 10px 20px;
+}
+
+.headerTitle {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--color-text);
+}
+
+.headerHomeLink {
+    text-decoration: none;
+}
+
+.userAvatarBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.userNameText {
+    color: var(--color-text);
+}
+
+
+
+
+
+
+.pageNotFound {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80vh;
+}
+
+.pageNotFoundBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pageNotFoundBlock span {
+    font-size: 20px;
+}
+
+
+
+
+
+
+.burgerMenuBackground {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #0e0e0e; */
+    backdrop-filter: saturate(1.5) blur(40px);
+    background-color: var(--burger-menu-background);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+}
+
+.burgerMenuBackgroundOpen {
+    opacity: 1;
+    visibility: visible;
+}
+
+.burgerMenu {
+    width: 500px;
+    padding: 0px 30px;
+    padding-top: 30px;
+    height: 100%;
+}
+
+.navBurgerMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.navBurgerMenuLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.burgerMenuHead {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+.burgerMenuTitle {
+    color: var(--color-text);
+}
+
+.burgerMenuButtonClose {
+    background: none;
+    border: none;
+}
+
+
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.userDataBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userData {
+    display: flex;
+    padding: 5px;
+    gap: 15px;
+}
+
+.userAvatarBlock {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.userAvatarImg {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+
+.userAvatarImgDesktop {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+}
+
+.userInfoBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.userName {
+    color: var(--color-text);
+}
+
+.userEmail {
+    color: var(--color-gray-150);
+    word-break: break-all;
+}
+
+
+.accountSettingBlock {
+    flex-shrink: 0;
+}
+
+
+.accountSettingLink {
+    text-decoration: none;
+}
+
+
+.buttonLogOut {
+    text-align: start;
+    background: none;
+    border: none;
+    color: #ff7b7b;
+    font-size: 16px;
+    transition: 0.2s all ;
+    padding: 5px;
+}
+
+.buttonLogOut:hover {
+    color: #ff6868;
+}
+
+.buttonLogOut:active {
+    color: #ff7b7b;
+}
+
+.buttonLogOutBurgerMenu {
+    text-align: start;
+    background: none;
+    border: none;
+    color: #ff7b7b;
+    font-size: 20px;
+    transition: 0.2s all ;
+    padding: 5px;
+}
+
+.buttonLogOutBurgerMenu:hover {
+    color: #ff6868;
+}
+
+.buttonLogOutBurgerMenu:active {
+    color: #ff7b7b;
+}
+
+
+
+
+
+
+
+.userDataLoaderBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+}
+
+.userDataLoader {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.userDataLoaderImg {
+  width: 75px;
+  animation: load linear 2s infinite; 
+}
+
+@keyframes load {
+    0% { 
+        transform: rotate(0deg); 
+    }
+
+    100% { 
+        transform: rotate(360deg); 
+    }    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.Link {
+    font-size: 16px;
+    color: var(--color-gray-250);
+    text-decoration: none;
+    transition: 0.2s all ;
+    padding: 5px;
+}
+
+.Link:hover {
+    color: var(--color-gray-100);
+}
+
+.Link:active {
+    color: var(--color-gray-250);
+}
+
+
+
+.LinkBurgerMenu {
+    font-size: 20px;
+    color: var(--color-gray-250);
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 0px;
+    transition: 0.2s all ;
+}
+
+.LinkBurgerMenu:hover {
+    color: var(--color-gray-100);
+}
+
+.LinkBurgerMenu:active {
+    color: var(--color-gray-250);
+}
+
+
+
+.desktopMenu {
+    display: flex;
+}
+
+.mobileMenu {
+    display: none;
+}
+
+.burgerMenuButton {
+    background: none;
+    border: none;
+}
+
+.loadingUserData {
+    color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 800px) {
+
+    .home {
+        height: 100vh;
+    }
+
+    .header {
+        padding: 15px 20px 15px 20px;
+    }
+
+    .desktopMenu {
+        display: none;
+    }
+    
+    .mobileMenu {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 320px) {
+
+    .header {
+        padding: 10px 10px 10px 10px;
+    }
+
+    .headerTitle {
+        gap: 10px;
+    }
+
+}
+
+/* [data-theme='light'] {
+    
+    .home {
+        background-color: rgb(255, 255, 255);
+    }
+ */
+
+/* } */

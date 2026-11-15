@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Roboto } from 'next/font/google';
+// import { Roboto } from 'next/font/google';
 import Link from 'next/link';
 
 import '@/style/global.css';
@@ -14,11 +14,11 @@ import { cookies } from 'next/headers';
 
 import ManifestLayout from './manifestLayout';
 
-const robotoSans = Roboto({
-    subsets: ['latin'],
-    weight: ['400', '600', '700'],
-    variable: '--font-roboto',
-});
+// const robotoSans = Roboto({
+//     subsets: ['latin'],
+//     weight: ['400', '600', '700'],
+//     variable: '--font-roboto',
+// });
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -41,6 +41,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <head>
                 <meta name="google" content="notranslate" />
                 <meta name="apple-mobile-web-app-title" content="Обмен файлами" />
+                <link
+                    href="https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,italic,500italic,600italic,700italic"
+                    rel="stylesheet"
+                />
 
                 {themeColor == 'light' ? (
                     <meta name="theme-color" content="#ffffff" />
@@ -53,7 +57,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 {/* <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
                 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" /> */}
             </head>
-            <body className={robotoSans.className}>
+            {/* <body className={robotoSans.className}> */}
+            <body>
                 <StoreProvider>
                     <IntlWrapper>
                         <div className={style.contenire}>

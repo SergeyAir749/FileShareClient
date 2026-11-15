@@ -53,7 +53,7 @@ function Sendfile() {
     const intl = useIntl();
 
     // console.log(intl.messages);
-    // console.log('Количество пеерведёных слов:', Object.keys(intl.messages).length);
+    // console.log('Количество переведёных слов:', Object.keys(intl.messages).length);
 
     const apiUrl = process.env.NEXT_PUBLIC_SERVER_API_URL;
     const fileApiUrl = process.env.NEXT_PUBLIC_SERVER_FILE_API_URL;
@@ -474,7 +474,7 @@ function Sendfile() {
     return (
         <div className={style.sendfile}>
             <div className={style.blockForm}>
-                <form className={style.formSendFile} onSubmit={(e) => upLoadFiles(e)}>
+                <form className={style.pageSendfile} onSubmit={(e) => upLoadFiles(e)}>
                     <div className={style.formHead}>
                         <div className={style.formIcon}>
                             {/* <button type="button" onClick={() => changeLanguage("en")}>EN</button>
@@ -612,7 +612,7 @@ function Sendfile() {
                         <div></div>
                     ) : (
                         <div className={style.notFile}>
-                            <span>{intl.formatMessage({ id: 'sendfilePage.noFilesSelected' })}</span>
+                            {/* <span>{intl.formatMessage({ id: 'sendfilePage.noFilesSelected' })}</span> */}
                         </div>
                     )}
 
@@ -644,13 +644,18 @@ function Sendfile() {
                                     className={style.fileInput}
                                     multiple
                                 />
-                                <button
-                                    className={style.styleButtonFileSelect}
-                                    type="button"
-                                    onClick={() => fileInputChange()}
-                                >
-                                    {intl.formatMessage({ id: 'sendfilePage.inputSelectFile' })}
-                                </button>
+
+                                {JSON.stringify(files) == JSON.stringify([]) ? (
+                                    <button
+                                        className={style.styleButtonFileSelect}
+                                        type="button"
+                                        onClick={() => fileInputChange()}
+                                    >
+                                        {intl.formatMessage({ id: 'sendfilePage.inputSelectFile' })}
+                                    </button>
+                                ) : (
+                                    <div style={{ display: 'none' }}></div>
+                                )}
                             </div>
                         ) : null}
 
@@ -764,27 +769,26 @@ function Sendfile() {
                             <div className={style.messageWhatDeviceIDBlock}>
                                 <span>
                                     {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.1' })}&nbsp;
-                                    <Link href={window?.location?.origin}>{window?.location?.origin}</Link>
+                                    <Link href={window?.location?.origin}>{window?.location?.origin}/getfile</Link>
                                     &nbsp;{intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.1.5' })}
                                 </span>
                                 <span>{intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.2' })}</span>
-                                <span>{intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.3' })}</span>
 
                                 {option == 'File' ? (
                                     <span>
-                                        {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.4.file' })}
+                                        {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.3.file' })}
                                     </span>
                                 ) : option == 'Text' ? (
                                     <span>
-                                        {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.4.text' })}
+                                        {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.3.text' })}
                                     </span>
                                 ) : (
                                     <span>
-                                        {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.4.file' })}
+                                        {intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.3.file' })}
                                     </span>
                                 )}
 
-                                <span>{intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.5' })}</span>
+                                <span>{intl.formatMessage({ id: 'sendfilePage.messageWhatDeviceIDBlock.4' })}</span>
                             </div>
                         ) : (
                             <div></div>
@@ -1091,11 +1095,20 @@ function Sendfile() {
                         <span className={style.error}>{error}</span>
                     </div>
 
+                    <div className={style.indentBlock}></div>
+
                     <div className={style.navExchangeBlock}>
                         <div className={style.navExchange}>
-                            <a className={`${style.LinkExchange}`} href={'/getfile'}>
-                                {intl.formatMessage({ id: 'sendfilePage.buttonLinkGet' })}
-                            </a>
+                            {process.env.NEXT_PUBLIC_COOKIE_SECURE === 'production' ? (
+                                <Link className={`${style.LinkExchange}`} href={'/getfile'}>
+                                    {intl.formatMessage({ id: 'sendfilePage.buttonLinkGet' })}
+                                </Link>
+                            ) : (
+                                <a className={`${style.LinkExchange}`} href={'/getfile'}>
+                                    {intl.formatMessage({ id: 'sendfilePage.buttonLinkGet' })}
+                                </a>
+                            )}
+
                             <Link className={`${style.LinkExchange} ${style.select}`} href={'/sendfile'}>
                                 {intl.formatMessage({ id: 'sendfilePage.buttonLinkSend' })}
                             </Link>

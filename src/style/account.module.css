@@ -121,6 +121,10 @@
     transition: 0.1s all ;
 }
 
+.linkNoBorder {
+    border: 0px !important;
+}
+
 .link:hover {
     background-color:var(--color-gray-400);
 }
@@ -216,6 +220,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
 .avatarPreviweImgMask {   

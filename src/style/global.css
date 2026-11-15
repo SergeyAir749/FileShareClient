@@ -1,5 +1,5 @@
 * {
-    font-family: 'Roboto';
+    font-family: 'Google Sans';
     box-sizing: border-box;
     overflow-x: hidden;
     padding: 0px;
@@ -53,8 +53,12 @@
     --color-gray-950: #1f1f1f;
 
     /* --color-black-transparent-pop-up-background: rgba(0, 0, 0, / 50%); */
+
+    --color-gray-700-70: rgb(36 36 36 / 70%);
     --color-black-transparent-45: rgb(0 0 0 / 45%);
     --color-file-cart-bg: #383838;
+
+    --color-nav-exchange-bg: rgba(36, 36, 36, 0.7);
 
     --color-black: #000000;
     --color-width: #ffffff;
@@ -138,9 +142,11 @@
     --color-gray-100: #000000;
     /* --color-black-transparent-pop-up-background: rgb(0, 0, 0, / 50%); */
 
+    --color-gray-700-70: rgb(230 230 230 / 70%);
     --color-black-transparent-45: rgb(0 0 0 / 45%);
-
     --color-file-cart-bg: rgb(255, 255, 255);
+
+    --color-nav-exchange-bg: rgba(230, 230, 230, 0.7);
 
     --color-black: #000000;
     --color-width: #ffffff;

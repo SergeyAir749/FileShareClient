@@ -11,7 +11,7 @@ export default function Story() {
     const intl = useIntl();
 
     const buttonBackPage = () => {
-        router.back();
+        router.push('/sendfile');
     };
 
     return (

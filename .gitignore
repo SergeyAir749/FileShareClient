@@ -46,3 +46,5 @@ next-env.d.ts
 /src/style/global copy.css
 /src/app/(settings)/settings/Settings copy.tsx
 /src/components/cookieSetFun copy.ts
+/public/loaderBeta.svg
+/public/loaderBeta2.svg

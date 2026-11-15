@@ -30,7 +30,7 @@ interface FileItem {
 }
 
 export default function Getfile() {
-    const [showPopUp, setShowPopUp] = useState(false);
+    const [showFilePopUp, setShowFilePopUp] = useState(false);
     const [files, setFiles] = useState<FileItem[]>([]);
     const { userData } = useAppSelector((state) => state.authReducer);
     const [timeFormat, setTimeFormat] = useState<string | null>(null);
@@ -40,7 +40,6 @@ export default function Getfile() {
 
     const [shareIdCopy, setShareIdCopy] = useState<boolean>(false);
 
-    const [userFileStory, setUserFileStory] = useState<FileItem[]>([]);
     const [showFiltersPopUp, setShowFiltersPopUp] = useState(false);
 
     const intl = useIntl();
@@ -98,8 +97,9 @@ export default function Getfile() {
             socketRef.current.on('files', async (files: []) => {
                 // console.log('wsfc4');
                 //console.log(files);
+                // setFiles([]);
                 setFiles(files);
-                showPopUpFun();
+                showFilesPopUpFun();
             });
 
             socketRef.current.emit('pingfilesShareId', userData?.shareId);
@@ -195,12 +195,12 @@ export default function Getfile() {
         });
     };
 
-    const showPopUpFun = () => {
-        setShowPopUp(true);
+    const showFilesPopUpFun = () => {
+        setShowFilePopUp(true);
     };
 
-    const closePopUpFun = () => {
-        setShowPopUp(false);
+    const closeFilesPopUpFun = () => {
+        setShowFilePopUp(false);
     };
 
     const fileAcceptFun = async (filename: string, id: string) => {
@@ -238,7 +238,7 @@ export default function Getfile() {
         const newFiles = files.filter((item) => item.id != id);
 
         if (JSON.stringify(newFiles) == JSON.stringify([])) {
-            setShowPopUp(false);
+            setShowFilePopUp(false);
         }
         setFiles(newFiles);
     };
@@ -254,7 +254,7 @@ export default function Getfile() {
 
                 const newFiles = files.filter((item) => item.id != id);
                 if (JSON.stringify(newFiles) == JSON.stringify([])) {
-                    setShowPopUp(false);
+                    setShowFilePopUp(false);
                 }
                 setFiles(newFiles);
 
@@ -295,7 +295,7 @@ export default function Getfile() {
 
                         const newFiles = files.filter((item) => item.id != files[i].id);
                         if (JSON.stringify(newFiles) == JSON.stringify([])) {
-                            setShowPopUp(false);
+                            setShowFilePopUp(false);
                         }
                         setFiles(newFiles);
 
@@ -363,7 +363,7 @@ export default function Getfile() {
         }
 
         //console.log({msg:'Файлы загружины'});
-        setShowPopUp(false);
+        setShowFilePopUp(false);
         setFiles([]);
     };
 
@@ -375,7 +375,7 @@ export default function Getfile() {
             }
             //console.log(response.data);
 
-            setShowPopUp(false);
+            setShowFilePopUp(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.log(error.message);
@@ -398,7 +398,7 @@ export default function Getfile() {
                 //console.log(response.data);
 
                 if (JSON.stringify(response.data) == JSON.stringify([])) {
-                    setShowPopUp(false);
+                    setShowFilePopUp(false);
                 }
             }
 
@@ -649,20 +649,139 @@ export default function Getfile() {
 
     return (
         <div className={style.getfile}>
-            <div className={style.blockForm}>
-                <div className={style.formGetfile}>
+            <div className={style.pageContent}>
+                <div className={style.pageGetfile}>
                     {/* popup filters file */}
 
-                    {showFiltersPopUp != false ? (
-                        <div className={style.filtersGetFilePopUpBackground}>
-                            <div className={style.filtersGetFilePopUp}>
-                                <div className={style.filtersGetFilePopUpMain}>
-                                    <div className={style.filtersGetFilePopUpHeader}>
-                                        <h2>{intl.formatMessage({ id: 'filtersFilePop.titleH2' })}</h2>
+                    {/* {showFiltersPopUp != false ? ( */}
+                    <div
+                        className={`${style.filtersGetFilePopUpBackground} ${showFiltersPopUp == true ? style.filtersGetFilePopUpShow : ''}`}
+                    >
+                        <div className={style.filtersGetFilePopUp}>
+                            <div className={style.filtersGetFilePopUpMain}>
+                                <div className={style.filtersGetFilePopUpHeader}>
+                                    <h2>{intl.formatMessage({ id: 'filtersFilePop.titleH2' })}</h2>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => closeFiltersPopUpFun()}
+                                        className={style.buttonFilePopUpClose}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="30px"
+                                            viewBox="0 -960 960 960"
+                                            width="30px"
+                                            fill="var(--color-text)"
+                                        >
+                                            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div className={style.filtersGetFilePopUpOptions}>
+                                    <div className={style.filtersGetFilePopUpOptionBlock}>
+                                        <input
+                                            type="date"
+                                            className={style.inputFiltersDate}
+                                            value={filters.date}
+                                            onChange={(e) => dateParser(e)}
+                                            name="date"
+                                        />
+
+                                        <select
+                                            className={style.selectOptionStyle}
+                                            value={filters.type}
+                                            onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+                                        >
+                                            <option value="all">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfilters.all',
+                                                })}
+                                            </option>
+                                            <option value="file">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfilters.files',
+                                                })}
+                                            </option>
+                                            <option value="text">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfilters.texts',
+                                                })}
+                                            </option>
+                                        </select>
+
+                                        <input
+                                            type="text"
+                                            className={style.inputFiltersText}
+                                            value={filters.sentToUser}
+                                            onChange={(e) => setFilters({ ...filters, sentToUser: e.target.value })}
+                                            name="sentToUser"
+                                            placeholder={intl.formatMessage({
+                                                id: 'filtersFilePop.selectOptionfilters.sentToUserNames',
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={style.filtersGetFilePopUpButtons}>
+                                <button
+                                    type="button"
+                                    onClick={() => filesResetFiltersFun()}
+                                    className={style.styleButtonResetFilters}
+                                >
+                                    {intl.formatMessage({
+                                        id: 'filtersFilePop.resetFilters',
+                                    })}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {/* ) : (
+                        <div></div>
+                    )} */}
+
+                    {/* file popup */}
+
+                    {/* {JSON.stringify(files) != JSON.stringify([]) && showFilePopUp != false ? ( */}
+                    <div
+                        className={` ${style.getFilePopUpBackground} ${JSON.stringify(files) != JSON.stringify([]) && showFilePopUp != false ? style.getFilePopUpBackgroundShow : ''} `}
+                    >
+                        <div className={style.getFilePopUp}>
+                            <div className={style.acceptFiles}>
+                                <header className={style.getFilePopUpHeader}>
+                                    <div className={style.getFilePopUpTitle}>
+                                        <h2 className={style.getFilePopUpTitleInfo}>
+                                            {intl.formatMessage({ id: 'getfilePage.getFilePopUpTitleInfoH2' })}
+                                        </h2>
+
+                                        <span className={style.getFilePopUpFilesLength}>
+                                            {intl.formatMessage({ id: 'getfilePage.getFilePopUpFilesLengthSpan' })}:{' '}
+                                            {filteredGetFile.length}
+                                        </span>
+                                    </div>
+
+                                    <div className={style.getFilePopUpHeaderButtons}>
+                                        <button
+                                            type="button"
+                                            onClick={() => showFiltersPopUpFun()}
+                                            className={style.buttonFilefilterPopUp}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="30px"
+                                                viewBox="0 -960 960 960"
+                                                width="30px"
+                                                fill="var(--color-text)"
+                                            >
+                                                <path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z" />
+                                            </svg>
+                                        </button>
 
                                         <button
                                             type="button"
-                                            onClick={() => closeFiltersPopUpFun()}
+                                            onClick={() => closeFilesPopUpFun()}
                                             className={style.buttonFilePopUpClose}
                                         >
                                             <svg
@@ -676,363 +795,236 @@ export default function Getfile() {
                                             </svg>
                                         </button>
                                     </div>
+                                </header>
 
-                                    <div className={style.filtersGetFilePopUpOptions}>
-                                        <div className={style.filtersGetFilePopUpOptionBlock}>
-                                            <input
-                                                type="date"
-                                                className={style.inputFiltersDate}
-                                                value={filters.date}
-                                                onChange={(e) => dateParser(e)}
-                                                name="date"
-                                            />
-
-                                            <select
-                                                className={style.selectOptionStyle}
-                                                value={filters.type}
-                                                onChange={(e) => setFilters({ ...filters, type: e.target.value })}
-                                            >
-                                                <option value="all">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfilters.all',
-                                                    })}
-                                                </option>
-                                                <option value="file">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfilters.files',
-                                                    })}
-                                                </option>
-                                                <option value="text">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfilters.texts',
-                                                    })}
-                                                </option>
-                                            </select>
-
-                                            <input
-                                                type="text"
-                                                className={style.inputFiltersText}
-                                                value={filters.sentToUser}
-                                                onChange={(e) => setFilters({ ...filters, sentToUser: e.target.value })}
-                                                name="sentToUser"
-                                                placeholder={intl.formatMessage({
-                                                    id: 'filtersFilePop.selectOptionfilters.sentToUserNames',
-                                                })}
-                                            />
-                                        </div>
+                                <div className={style.intermediateBlock}>
+                                    <div className={style.inputSearchBlock}>
+                                        <input
+                                            className={style.inputFilters}
+                                            type="text"
+                                            placeholder={intl.formatMessage({ id: 'getFileStory.inputSearch' })}
+                                            value={filters.search}
+                                            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                                        />
                                     </div>
+                                    {popUpFilesErrorMessage != '' ? (
+                                        <div className={style.fileErrorMessageBlock}>
+                                            <div className={style.fileErrorMessage}>
+                                                <span>{popUpFilesErrorMessage}</span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
+                                    {showTextCopyMessage == true ? (
+                                        <div className={style.textCopyMessageBlock}>
+                                            <div className={style.textCopyMessage}>
+                                                <span>
+                                                    {intl.formatMessage({
+                                                        id: 'getfilePage.file.copy.click',
+                                                    })}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </div>
 
-                                <div className={style.filtersGetFilePopUpButtons}>
+                                <div className={style.getFilePopUpFilesList}>
+                                    <div className={style.getFilePopUpItems}>
+                                        {JSON.stringify(filteredGetFile) != JSON.stringify([]) ? (
+                                            filteredGetFile?.map((file, index) => (
+                                                <div key={file.id} className={style.fileItem}>
+                                                    {file.filename != undefined ? (
+                                                        <div className={style.fileBlock}>
+                                                            <div className={style.fileIcon}>
+                                                                <svg
+                                                                    width="35"
+                                                                    height="35"
+                                                                    viewBox="0 0 100 100"
+                                                                    fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <g clipPath="url(#clip0_358_516)">
+                                                                        <path
+                                                                            d="M60 30L60.0127 30.5146C60.2805 35.7983 64.6498 40 70 40H100V90C100 95.5228 95.5229 100 90 100H10C4.47715 100 0 95.5228 0 90V10C1.03081e-06 4.47715 4.47715 0 10 0H60V30ZM97.7861 36H70C66.6863 36 64 33.3137 64 30V2.21289L97.7861 36Z"
+                                                                            fill="#ADADAD"
+                                                                        />
+                                                                    </g>
+                                                                    <defs>
+                                                                        <clipPath id="clip0_358_516">
+                                                                            <rect
+                                                                                width="100"
+                                                                                height="100"
+                                                                                fill="white"
+                                                                            />
+                                                                        </clipPath>
+                                                                    </defs>
+                                                                </svg>
+                                                            </div>
+
+                                                            <div>
+                                                                <span className={style.fileName}>{file.filename}</span>
+                                                            </div>
+                                                        </div>
+                                                    ) : file.text != undefined ? (
+                                                        <div className={style.textBlock}>
+                                                            <span>{file.text}</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div></div>
+                                                    )}
+
+                                                    <div className={style.fileInfo}>
+                                                        <span className={style.fileInfoText}>
+                                                            {intl.formatMessage({
+                                                                id: 'getfilePage.file.sentToUser',
+                                                            })}
+                                                            :{' '}
+                                                            {file.sentToUser == 'guest'
+                                                                ? ((file.sentToUser = intl.formatMessage({
+                                                                      id: 'userIsGuest.username',
+                                                                  })),
+                                                                  file.sentToUser)
+                                                                : file.sentToUser == 'deletedAccount'
+                                                                  ? ((file.sentToUser = intl.formatMessage({
+                                                                        id: 'userIsDelete.username',
+                                                                    })),
+                                                                    file.sentToUser)
+                                                                  : file.sentToUser}
+                                                        </span>
+                                                        <span className={style.fileInfoText}>
+                                                            {intl.formatMessage({
+                                                                id: 'getfilePage.file.userWillReceive',
+                                                            })}
+                                                            :{' '}
+                                                            {file.userWillReceive == 'guest'
+                                                                ? ((file.userWillReceive = intl.formatMessage({
+                                                                      id: 'userIsGuest.username',
+                                                                  })),
+                                                                  file.userWillReceive)
+                                                                : file.userWillReceive == 'deletedAccount'
+                                                                  ? ((file.userWillReceive = intl.formatMessage({
+                                                                        id: 'userIsDelete.username',
+                                                                    })),
+                                                                    file.userWillReceive)
+                                                                  : file.userWillReceive}
+                                                        </span>
+                                                        <span className={style.fileInfoText}>
+                                                            {intl.formatMessage({
+                                                                id: 'getfilePage.file.sentFromDevice',
+                                                            })}
+                                                            : {file.sentFromDevice}
+                                                        </span>
+                                                        <span className={style.fileInfoText}>
+                                                            {intl.formatMessage({
+                                                                id: 'getfilePage.file.date',
+                                                            })}
+                                                            :{' '}
+                                                            {typeof file.data === 'object'
+                                                                ? dateParserTimeZone(file.data.data, file.data.gtm)
+                                                                : dateParserTimeZone(file.data, undefined)}
+                                                        </span>
+                                                        {file.size != null ? (
+                                                            <span className={style.fileInfoText}>
+                                                                {intl.formatMessage({
+                                                                    id: 'getfilePage.file.size',
+                                                                })}
+                                                                : {funConvertFileSize(file.size)}
+                                                            </span>
+                                                        ) : (
+                                                            ''
+                                                        )}
+                                                        <span className={style.fileInfoText}>
+                                                            {intl.formatMessage({
+                                                                id: 'file.fileWillBeDeleted',
+                                                            })}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className={style.fileButtons}>
+                                                        <button
+                                                            className={style.styleButtonDownlodeCancel}
+                                                            type="button"
+                                                            onClick={() => fileCancelFun(file.id)}
+                                                        >
+                                                            {intl.formatMessage({
+                                                                id: 'getfilePage.file.reject',
+                                                            })}
+                                                        </button>
+
+                                                        {file.filename != undefined ? (
+                                                            <button
+                                                                className={style.styleButtonDownlode}
+                                                                type="button"
+                                                                onClick={() => fileAcceptFun(file.filename, file.id)}
+                                                            >
+                                                                {intl.formatMessage({
+                                                                    id: 'getfilePage.file.download',
+                                                                })}
+                                                            </button>
+                                                        ) : file.text != undefined ? (
+                                                            <button
+                                                                className={style.styleButtonDownlode}
+                                                                type="button"
+                                                                onClick={() => textCopyFun(file.text, file.id)}
+                                                            >
+                                                                {intl.formatMessage({
+                                                                    id: 'getfilePage.file.copy',
+                                                                })}
+                                                            </button>
+                                                        ) : (
+                                                            <div></div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className={style.notFilesStory}>
+                                                <span className={style.notFilesStorySpan}>
+                                                    {intl.formatMessage({
+                                                        id: 'file.notFound',
+                                                    })}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={style.getFilePopUpButtonsBlock}>
+                                <div className={style.getFilePopUpButtons}>
                                     <button
                                         type="button"
-                                        onClick={() => filesResetFiltersFun()}
-                                        className={style.styleButtonResetFilters}
+                                        onClick={() => allFilesCancelFun()}
+                                        className={style.styleButtonCancel}
                                     >
                                         {intl.formatMessage({
-                                            id: 'filtersFilePop.resetFilters',
+                                            id: 'getfilePage.files.rejectAll',
+                                        })}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => filesAcceptFun()}
+                                        className={style.styleButtonAccept}
+                                    >
+                                        {intl.formatMessage({
+                                            id: 'getfilePage.files.acceptEverything',
                                         })}
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    ) : (
+                    </div>
+                    {/* ) : (
                         <div></div>
-                    )}
-
-                    {/* file popup */}
-
-                    {JSON.stringify(files) != JSON.stringify([]) && showPopUp != false ? (
-                        <div className={style.getFilePopUpBackground}>
-                            <div className={style.getFilePopUp}>
-                                <div className={style.acceptFiles}>
-                                    <header className={style.getFilePopUpHeader}>
-                                        <div className={style.getFilePopUpTitle}>
-                                            <h2 className={style.getFilePopUpTitleInfo}>
-                                                {intl.formatMessage({ id: 'getfilePage.getFilePopUpTitleInfoH2' })}
-                                            </h2>
-
-                                            <span className={style.getFilePopUpFilesLength}>
-                                                {intl.formatMessage({ id: 'getfilePage.getFilePopUpFilesLengthSpan' })}:{' '}
-                                                {filteredGetFile.length}
-                                            </span>
-                                        </div>
-
-                                        <div className={style.getFilePopUpHeaderButtons}>
-                                            <button
-                                                type="button"
-                                                onClick={() => showFiltersPopUpFun()}
-                                                className={style.buttonFilefilterPopUp}
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    height="30px"
-                                                    viewBox="0 -960 960 960"
-                                                    width="30px"
-                                                    fill="var(--color-text)"
-                                                >
-                                                    <path d="M440-160q-17 0-28.5-11.5T400-200v-240L168-736q-15-20-4.5-42t36.5-22h560q26 0 36.5 22t-4.5 42L560-440v240q0 17-11.5 28.5T520-160h-80Zm40-308 198-252H282l198 252Zm0 0Z" />
-                                                </svg>
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                onClick={() => closePopUpFun()}
-                                                className={style.buttonFilePopUpClose}
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    height="30px"
-                                                    viewBox="0 -960 960 960"
-                                                    width="30px"
-                                                    fill="var(--color-text)"
-                                                >
-                                                    <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </header>
-
-                                    <div className={style.intermediateBlock}>
-                                        <div className={style.inputSearchBlock}>
-                                            <input
-                                                className={style.inputFilters}
-                                                type="text"
-                                                placeholder={intl.formatMessage({ id: 'getFileStory.inputSearch' })}
-                                                value={filters.search}
-                                                onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                                            />
-                                        </div>
-                                        {popUpFilesErrorMessage != '' ? (
-                                            <div className={style.fileErrorMessageBlock}>
-                                                <div className={style.fileErrorMessage}>
-                                                    <span>{popUpFilesErrorMessage}</span>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div></div>
-                                        )}
-                                        {showTextCopyMessage == true ? (
-                                            <div className={style.textCopyMessageBlock}>
-                                                <div className={style.textCopyMessage}>
-                                                    <span>
-                                                        {intl.formatMessage({
-                                                            id: 'getfilePage.file.copy.click',
-                                                        })}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div></div>
-                                        )}
-                                    </div>
-
-                                    <div className={style.getFilePopUpFilesList}>
-                                        <div className={style.getFilePopUpItems}>
-                                            {JSON.stringify(filteredGetFile) != JSON.stringify([]) ? (
-                                                filteredGetFile?.map((file, index) => (
-                                                    <div key={index} className={style.fileItem}>
-                                                        {file.filename != undefined ? (
-                                                            <div className={style.fileBlock}>
-                                                                <div className={style.fileIcon}>
-                                                                    <svg
-                                                                        width="35"
-                                                                        height="35"
-                                                                        viewBox="0 0 100 100"
-                                                                        fill="none"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                    >
-                                                                        <g clipPath="url(#clip0_358_516)">
-                                                                            <path
-                                                                                d="M60 30L60.0127 30.5146C60.2805 35.7983 64.6498 40 70 40H100V90C100 95.5228 95.5229 100 90 100H10C4.47715 100 0 95.5228 0 90V10C1.03081e-06 4.47715 4.47715 0 10 0H60V30ZM97.7861 36H70C66.6863 36 64 33.3137 64 30V2.21289L97.7861 36Z"
-                                                                                fill="#ADADAD"
-                                                                            />
-                                                                        </g>
-                                                                        <defs>
-                                                                            <clipPath id="clip0_358_516">
-                                                                                <rect
-                                                                                    width="100"
-                                                                                    height="100"
-                                                                                    fill="white"
-                                                                                />
-                                                                            </clipPath>
-                                                                        </defs>
-                                                                    </svg>
-                                                                </div>
-
-                                                                <div>
-                                                                    <span className={style.fileName}>
-                                                                        {file.filename}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        ) : file.text != undefined ? (
-                                                            <div className={style.textBlock}>
-                                                                <span>{file.text}</span>
-                                                            </div>
-                                                        ) : (
-                                                            <div></div>
-                                                        )}
-
-                                                        <div className={style.fileInfo}>
-                                                            <span className={style.fileInfoText}>
-                                                                {intl.formatMessage({
-                                                                    id: 'getfilePage.file.sentToUser',
-                                                                })}
-                                                                :{' '}
-                                                                {file.sentToUser == 'Гость'
-                                                                    ? ((file.sentToUser = intl.formatMessage({
-                                                                          id: 'userIsGuest.username',
-                                                                      })),
-                                                                      file.sentToUser)
-                                                                    : file.sentToUser == 'Удалённый аккаунт'
-                                                                      ? ((file.sentToUser = intl.formatMessage({
-                                                                            id: 'userIsDelete.username',
-                                                                        })),
-                                                                        file.sentToUser)
-                                                                      : file.sentToUser}
-                                                            </span>
-                                                            <span className={style.fileInfoText}>
-                                                                {intl.formatMessage({
-                                                                    id: 'getfilePage.file.userWillReceive',
-                                                                })}
-                                                                :{' '}
-                                                                {file.userWillReceive == 'Гость'
-                                                                    ? ((file.userWillReceive = intl.formatMessage({
-                                                                          id: 'userIsGuest.username',
-                                                                      })),
-                                                                      file.userWillReceive)
-                                                                    : file.userWillReceive == 'Удалённый аккаунт'
-                                                                      ? ((file.userWillReceive = intl.formatMessage({
-                                                                            id: 'userIsDelete.username',
-                                                                        })),
-                                                                        file.userWillReceive)
-                                                                      : file.userWillReceive}
-                                                            </span>
-                                                            <span className={style.fileInfoText}>
-                                                                {intl.formatMessage({
-                                                                    id: 'getfilePage.file.sentFromDevice',
-                                                                })}
-                                                                : {file.sentFromDevice}
-                                                            </span>
-                                                            <span className={style.fileInfoText}>
-                                                                {intl.formatMessage({
-                                                                    id: 'getfilePage.file.date',
-                                                                })}
-                                                                :{' '}
-                                                                {typeof file.data === 'object'
-                                                                    ? dateParserTimeZone(file.data.data, file.data.gtm)
-                                                                    : dateParserTimeZone(file.data, undefined)}
-                                                            </span>
-                                                            {file.size != null ? (
-                                                                <span className={style.fileInfoText}>
-                                                                    {intl.formatMessage({
-                                                                        id: 'getfilePage.file.size',
-                                                                    })}
-                                                                    : {funConvertFileSize(file.size)}
-                                                                </span>
-                                                            ) : (
-                                                                ''
-                                                            )}
-                                                            <span className={style.fileInfoText}>
-                                                                Файл будет удалён через 14 дней
-                                                            </span>
-                                                        </div>
-
-                                                        {file.filename != undefined ? (
-                                                            <div className={style.fileButtons}>
-                                                                <button
-                                                                    className={style.styleButtonDownlodeCancel}
-                                                                    type="button"
-                                                                    onClick={() => fileCancelFun(file.id)}
-                                                                >
-                                                                    {intl.formatMessage({
-                                                                        id: 'getfilePage.file.reject',
-                                                                    })}
-                                                                </button>
-                                                                <button
-                                                                    className={style.styleButtonDownlode}
-                                                                    type="button"
-                                                                    onClick={() =>
-                                                                        fileAcceptFun(file.filename, file.id)
-                                                                    }
-                                                                >
-                                                                    {intl.formatMessage({
-                                                                        id: 'getfilePage.file.download',
-                                                                    })}
-                                                                </button>
-                                                            </div>
-                                                        ) : file.text != undefined ? (
-                                                            <div className={style.fileButtons}>
-                                                                <button
-                                                                    className={style.styleButtonDownlodeCancel}
-                                                                    type="button"
-                                                                    onClick={() => fileCancelFun(file.id)}
-                                                                >
-                                                                    {intl.formatMessage({
-                                                                        id: 'getfilePage.file.reject',
-                                                                    })}
-                                                                </button>
-                                                                <button
-                                                                    className={style.styleButtonDownlode}
-                                                                    type="button"
-                                                                    onClick={() => textCopyFun(file.text, file.id)}
-                                                                >
-                                                                    {intl.formatMessage({
-                                                                        id: 'getfilePage.file.copy',
-                                                                    })}
-                                                                </button>
-                                                            </div>
-                                                        ) : (
-                                                            <div></div>
-                                                        )}
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <div className={style.notFilesStory}>
-                                                    <span className={style.notFilesStorySpan}>
-                                                        {intl.formatMessage({
-                                                            id: 'file.notFound',
-                                                        })}
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className={style.getFilePopUpButtonsBlock}>
-                                    <div className={style.getFilePopUpButtons}>
-                                        <button
-                                            type="button"
-                                            onClick={() => allFilesCancelFun()}
-                                            className={style.styleButtonCancel}
-                                        >
-                                            {intl.formatMessage({
-                                                id: 'getfilePage.files.rejectAll',
-                                            })}
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => filesAcceptFun()}
-                                            className={style.styleButtonAccept}
-                                        >
-                                            {intl.formatMessage({
-                                                id: 'getfilePage.files.acceptEverything',
-                                            })}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div></div>
-                    )}
+                    )} */}
 
                     {/* getfile */}
 
-                    <div className={style.formHead}>
-                        <div className={style.formIcon}>
+                    <div className={style.pageHead}>
+                        <div className={style.pageIcon}>
                             <svg
                                 width="70"
                                 height="70"
@@ -1067,7 +1059,7 @@ export default function Getfile() {
                             </svg>
                         </div>
 
-                        <div className={style.formTitle}>
+                        <div className={style.pageTitle}>
                             <h2>
                                 {intl.formatMessage({
                                     id: 'getfilePage.formTitleH2',
@@ -1081,8 +1073,8 @@ export default function Getfile() {
                         </div>
                     </div>
 
-                    <div className={style.userDataBlock}>
-                        <div className={style.userIdBlock}>
+                    <div className={style.pageMain}>
+                        <div className={style.userDataBlock}>
                             <p>
                                 {intl.formatMessage({
                                     id: 'getfilePage.yourDeviceID',
@@ -1096,7 +1088,40 @@ export default function Getfile() {
                                 </h2>
                             ) : (
                                 <div className={style.userId}>
-                                    <h2 onClick={() => shareIdCopyFun()}>{userData?.shareId}</h2>
+                                    <div className={style.userIdBlock} onClick={() => shareIdCopyFun()}>
+                                        <h2>{userData?.shareId}</h2>
+                                        <svg
+                                            width="25"
+                                            height="25"
+                                            viewBox="0 0 40 40"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <g clip-path="url(#clip0_427_660)">
+                                                <path
+                                                    d="M5.25 27C3.45507 27 2 25.5449 2 23.75V7C2 4.23858 4.23858 2 7 2H24.875C26.6009 2 28 3.39911 28 5.125"
+                                                    stroke-width="4"
+                                                    stroke-linecap="round"
+                                                    stroke="var(--color-text)"
+                                                />
+                                                <rect
+                                                    x="13"
+                                                    y="13"
+                                                    width="25"
+                                                    height="25"
+                                                    rx="5"
+                                                    stroke="var(--color-text)"
+                                                    stroke-width="4"
+                                                    stroke-linecap="round"
+                                                />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_427_660">
+                                                    <rect width="40" height="40" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
 
                                     {shareIdCopy != false ? (
                                         <span className={style.yourDeviceIDCopy}>
@@ -1112,7 +1137,7 @@ export default function Getfile() {
                                         <button
                                             type="button"
                                             className={style.openFilePopUp}
-                                            onClick={() => showPopUpFun()}
+                                            onClick={() => showFilesPopUpFun()}
                                         >
                                             {intl.formatMessage({
                                                 id: 'getfilePage.openFileList',
@@ -1128,15 +1153,18 @@ export default function Getfile() {
 
                     <div className={style.navExchangeBlock}>
                         <div className={style.navExchange}>
-                            <a className={`${style.LinkExchange} ${style.select}`} href={'/getfile'}>
-                                {intl.formatMessage({
-                                    id: 'getfilePage.buttonLinkGet',
-                                })}
-                            </a>
+                            {process.env.NEXT_PUBLIC_COOKIE_SECURE === 'production' ? (
+                                <Link className={`${style.LinkExchange} ${style.select}`} href={'/getfile'}>
+                                    {intl.formatMessage({ id: 'sendfilePage.buttonLinkGet' })}
+                                </Link>
+                            ) : (
+                                <a className={`${style.LinkExchange} ${style.select}`} href={'/getfile'}>
+                                    {intl.formatMessage({ id: 'sendfilePage.buttonLinkGet' })}
+                                </a>
+                            )}
+
                             <Link className={`${style.LinkExchange}`} href={'/sendfile'}>
-                                {intl.formatMessage({
-                                    id: 'getfilePage.buttonLinkSend',
-                                })}
+                                {intl.formatMessage({ id: 'sendfilePage.buttonLinkSend' })}
                             </Link>
                         </div>
                     </div>

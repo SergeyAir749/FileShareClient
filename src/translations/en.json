@@ -31,15 +31,14 @@
   "sendfilePage.inputTextTextarea": "Enter text...",
   "sendfilePage.inputSelectFile": "Select file",
 
-  "sendfilePage.inputDeviceID": "Your Device ID",
+  "sendfilePage.inputDeviceID": "Recipient ID",
 
   "sendfilePage.messageWhatDeviceIDBlock.1": "1. Open the website",
-  "sendfilePage.messageWhatDeviceIDBlock.1.5": "on the other device",
-  "sendfilePage.messageWhatDeviceIDBlock.2": "2. Tap the \"Get\" button; it is located at the bottom of the screen next to the \"Send\" button",
-  "sendfilePage.messageWhatDeviceIDBlock.3": "3. On the receive page, find the \"Your Device ID\" line and enter the code below into that field",
-  "sendfilePage.messageWhatDeviceIDBlock.4.file": "4. On this device, select the files you want to send and tap the \"Send\" button",
-  "sendfilePage.messageWhatDeviceIDBlock.4.text": "4. On this device, enter the text you want to send and tap the \"Send\" button",
-  "sendfilePage.messageWhatDeviceIDBlock.5": "5. Wait for the transfer to complete; the files should appear on the other device",
+  "sendfilePage.messageWhatDeviceIDBlock.1.5": "on the device to which you want to send the file or text.",
+  "sendfilePage.messageWhatDeviceIDBlock.2": "2. Find the \"Recipient ID\" line and enter the code shown below into that field.",
+  "sendfilePage.messageWhatDeviceIDBlock.3.file": "3. On this device, select the files you want to send and click the \"Send\" button.",
+  "sendfilePage.messageWhatDeviceIDBlock.3.text": "3. On this device, enter the text you want to send and click the \"Send\" button.",
+  "sendfilePage.messageWhatDeviceIDBlock.4": "4. Wait for the upload to complete; the files should appear on the other device.",
 
 
 
@@ -89,7 +88,7 @@
   "getfilePage.formTitleH2": "Get file",
   "getfilePage.formDescriptionP": "Here you can receive files from other devices",
 
-  "getfilePage.yourDeviceID": "Your device ID",
+  "getfilePage.yourDeviceID": "Your recipient ID",
   "getfilePage.loding": "Loading",
   "getfilePage.yourDeviceID.copy.click": "ID copied!",
   "getfilePage.openFileList": "Open file list",
@@ -267,6 +266,42 @@
   "login.link.noAccountRegistration": "No account registration",
   "login.link.recoverAccount": "Recover account?",
   "login.link.forgotYourPassword": "Forgot your password?",
+  "login.link.byQRCode": "Log in by QR code",
+
+
+
+  "twoFactorAuthLogin.page.title": "Two-factor authentication",
+  "twoFactorAuthLogin.page.description": "Two-factor authentication",
+  
+  "twoFactorAuthLogin.formTitleH2": "Two-factor authentication",
+  "twoFactorAuthLogin.formDescriptionP": "Enter the code from your email to confirm it's you",
+
+  "twoFactorAuthLogin.input.enterTheCodeFromTheEmail": "Enter the code from your email",
+  "twoFactorAuthLogin.message.getNewCode": "A new code has been sent",
+
+  "twoFactorAuthLogin.button.submit": "Submit code",
+  "twoFactorAuthLogin.button.getNewCode": "Get a new code",
+  "twoFactorAuthLogin.button.cancel": "Cancel",
+
+
+  "QRCodeLoginGet.page.title": "Log in by QR code",
+  "QRCodeLoginGet.formTitleH2": "Log in by QR code",
+  "QRCodeLoginGet.formDescriptionP": "Scan the QR code with your phone to log in",
+
+  "QRCodeLoginGet.link.signup": "No account? Sign up",
+  "QRCodeLoginGet.link.login": "Log in with username and password",
+
+  "QRCodeLoginGet.greetings": "Hello ",
+
+
+  "QRCodeLoginSend.page.title": "Log in by QR code",
+  "QRCodeLoginSend.formTitleH2": "Log in by QR code",
+  "QRCodeLoginSend.formDescriptionP": "You are about to log in to your account on this device:",
+  "QRCodeLoginSend.slideForOverLogin": "Slide all the way to log in",
+  "QRCodeLoginSend.inputRadiusLoginSuccessful.text": "Login successful",
+  "QRCodeLoginSend.LoginSuccessful": "Login successful; you can close this page",
+
+
   
 
 
@@ -327,6 +362,17 @@
 
   "signup.link.haveAnAccountLogin": "Have an account login",
 
+
+
+
+
+  "signupUserName.page.title": "Registration",
+
+  "signupUserName.formTitleH2": "Enter your name",
+
+  "signupUserName.input.username": "First name", 
+  "signupUserName.input.surname": "Last name", 
+  "signupUserName.button.submit": "Continue",
 
 
 
@@ -430,8 +476,8 @@
   "settings.date.option.value.12": "12 - hour",
   "settings.date.option.value.23": "24 - hour",
 
-  "settings.languages.option.value.ru": "Russian - Русский",
-  "settings.languages.option.value.en": "English - Английский",
+  "settings.languages.option.value.ru": "Русский",
+  "settings.languages.option.value.en": "English",
 
   "settingsNav.headerTitleH2": "Settings",
   "settingsNav.link.main": "Main",
@@ -490,6 +536,7 @@
   "account.accountSetting.link.change.email": "Change Email Address",
   "account.accountSetting.link.change.name": "Change Username",
   "account.accountSetting.link.change.password": "Change Password",
+  "account.accountSetting.link.change.twoFactorAuth": "Two-factor authentication",
   "account.accountSetting.link.change.delete": "Delete Account",
 
   "account.accountSetting.link.logout": "Logout",
@@ -554,7 +601,39 @@
   "changeUserName.button.submit": "Save changes",
   "changeUserName.button.cancel": "Cancel",
 
+
   
+
+
+  "twoFactorAuthVerification.page.title": "Enter your password to continue",
+
+  "twoFactorAuthVerification.formTitleH2": "Enter your password to continue",
+  "twoFactorAuthVerification.formDescriptionP": "Confirm that this is your account",
+  
+  "twoFactorAuthVerification.input.password": "Password",
+
+  "twoFactorAuthVerification.button.submit": "Continue",
+  "twoFactorAuthVerification.button.cancel": "Cancel",
+
+
+
+  "twoFactorAuth.page.title": "Two-factor authentication",
+
+  "twoFactorAuth.formTitleH2": "Two-factor authentication",
+  "twoFactorAuth.formDescriptionP": "Two-factor authentication provides an extra layer of security for your account. Once enabled, the login process will consist of two steps: 1. Enter your email and password. 2. Enter the code sent to the email address associated with your account.",
+
+  "twoFactorAuth.info.warning.title": "Please read this carefully before deleting your account",
+  "twoFactorAuth.info.warning.info": "Your account, along with any files sent to you and your history, will be permanently deleted. You may cancel the deletion within 14 days.",
+  
+  "twoFactorAuth.button.submit.on.true": "Enable",
+  "twoFactorAuth.button.submit.on.false": "Disable",
+  "twoFactorAuth.button.cancel": "Cancel",
+
+  "twoFactorAuth.status.true": "Two-factor authentication is enabled",
+  "twoFactorAuth.status.false": "Two-factor authentication is disabled",
+
+
+
 
 
 
@@ -697,7 +776,7 @@
   "error.massage.emailNotVerified": "Email not verified",
 
   "error.massage.invalidUserID": "Invalid ID or this account does not exist.",  
-  "error.massage.deviceIDDoNotMatch": "Device IDs do not match",
+  "error.massage.deviceIDDoNotMatch": "Recipient ID do not match",
 
   "error.massage.fileNotFound": "File not found",
   "error.massage.textNotFound": "Text not found",
@@ -725,7 +804,7 @@
   "error.massage.accountDeleted": "Account deleted",
 
 
-
+  "error.massage.sessionError": "Ошибка сессии",
 
 
 
@@ -742,6 +821,12 @@
   "userIsDelete.username": "Deleted account",
 
   "file.notFound": "No files found",
+  "file.fileWillBeDeleted": "The file will be deleted in 14 days",
+
+
+
+  "pageNotFound": "Page not found",
+
 
 
   

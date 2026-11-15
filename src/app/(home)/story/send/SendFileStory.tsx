@@ -39,9 +39,16 @@ export default function SendFileStory() {
     const [showSettingsPopUp, setShowSettingsPopUp] = useState(false);
     const [showFiltersPopUp, setShowFiltersPopUp] = useState(false);
     const [showMessageSettingsPopUp, setShowMessageSettingsPopUp] = useState(false);
+    const [messageDeleteFileStoryPopUp, setMessageDeleteFileStoryPopUp] = useState({
+        show: false,
+        filename: '',
+        id: '',
+    });
     const [userFileStory, setUserFileStory] = useState<FileItem[]>([]);
     const [error, setError] = useState('');
     const [timeFormat, setTimeFormat] = useState<string | null>(null);
+
+    const [fileAdditionallyMenuPopUpShow, setFileAdditionallyMenuPopUpShow] = useState<Record<string, boolean>>({});
 
     const intl = useIntl();
 
@@ -442,7 +449,10 @@ export default function SendFileStory() {
             await deleteFileStorySendServer(id);
 
             //console.log('Response:', response.data);
+
             getStorySendFile();
+            closeMessageDeleteFileStoryPopUp();
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.log(error.message);
@@ -490,7 +500,7 @@ export default function SendFileStory() {
     };
 
     const buttonBackPage = () => {
-        router.back();
+        router.push('/story');
     };
 
     const showMessageDeletePopUpFun = () => {
@@ -517,133 +527,54 @@ export default function SendFileStory() {
         setShowFiltersPopUp(false);
     };
 
+    const showMessageDeleteFileStoryPopUp = (id: string, filename: string) => {
+        setMessageDeleteFileStoryPopUp((messageDeleteFile) => ({
+            ...messageDeleteFile,
+            ['show']: true,
+            ['id']: id,
+            ['filename']: filename,
+        }));
+    };
+
+    const closeMessageDeleteFileStoryPopUp = () => {
+        setMessageDeleteFileStoryPopUp((messageDeleteFile) => ({
+            ...messageDeleteFile,
+            ['show']: false,
+        }));
+    };
+
+    const openFileAdditionallyMenuFun = (id: string) => {
+        console.log(fileAdditionallyMenuPopUpShow);
+
+        if (fileAdditionallyMenuPopUpShow[id] != true) {
+            setFileAdditionallyMenuPopUpShow({
+                ...fileAdditionallyMenuPopUpShow,
+                [id]: true,
+            });
+        } else {
+            setFileAdditionallyMenuPopUpShow({
+                ...fileAdditionallyMenuPopUpShow,
+                [id]: false,
+            });
+        }
+    };
+
     return (
         <div className={style.getFileStory}>
             <div className={style.blockStory}>
                 <div className={style.formGetFileStory}>
-                    {showFiltersPopUp != false ? (
-                        <div className={style.filtersStoryPopUpBackground}>
-                            <div className={style.filtersStoryPopUp}>
-                                <div className={style.filtersStoryPopUpMain}>
-                                    <div className={style.filtersStoryPopUpHeader}>
-                                        <h2>{intl.formatMessage({ id: 'filtersFilePop.titleH2' })}</h2>
-
-                                        <button
-                                            type="button"
-                                            onClick={() => closeFiltersPopUpFun()}
-                                            className={style.buttonFilePopUpClose}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="30px"
-                                                viewBox="0 -960 960 960"
-                                                width="30px"
-                                                fill="var(--color-text)"
-                                            >
-                                                <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                                            </svg>
-                                        </button>
-                                    </div>
-
-                                    <div className={style.filtersStoryPopUpOptions}>
-                                        <div className={style.filtersStoryPopUpOptionBlock}>
-                                            <input
-                                                type="date"
-                                                className={style.inputFiltersDate}
-                                                value={filters.date}
-                                                onChange={(e) => dateParser(e)}
-                                                name="date"
-                                            />
-
-                                            <select
-                                                className={style.selectOptionStyle}
-                                                value={filters.type}
-                                                onChange={(e) => setFilters({ ...filters, type: e.target.value })}
-                                            >
-                                                <option value="all">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfilters.all',
-                                                    })}
-                                                </option>
-                                                <option value="file">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfilters.files',
-                                                    })}
-                                                </option>
-                                                <option value="text">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfilters.texts',
-                                                    })}
-                                                </option>
-                                            </select>
-
-                                            <select
-                                                className={style.selectOptionStyle}
-                                                value={filters.status}
-                                                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-                                            >
-                                                <option value="all">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfiltersStatus.all',
-                                                    })}
-                                                </option>
-                                                <option value="sent">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfiltersStatus.sent',
-                                                    })}
-                                                </option>
-                                                <option value="accepted">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfiltersStatus.accepted',
-                                                    })}
-                                                </option>
-                                                <option value="refusal">
-                                                    {intl.formatMessage({
-                                                        id: 'filtersFilePop.selectOptionfiltersStatus.refusal',
-                                                    })}
-                                                </option>
-                                            </select>
-
-                                            <input
-                                                type="text"
-                                                className={style.inputFiltersText}
-                                                value={filters.sentToUser}
-                                                onChange={(e) => setFilters({ ...filters, sentToUser: e.target.value })}
-                                                name="sentToUser"
-                                                placeholder={intl.formatMessage({
-                                                    id: 'filtersFilePop.selectOptionfilters.sentToUserNames',
-                                                })}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className={style.filtersStoryPopUpButtons}>
-                                    <button
-                                        type="button"
-                                        onClick={() => filesResetFiltersFun()}
-                                        className={style.styleButtonResetFilters}
-                                    >
-                                        {intl.formatMessage({
-                                            id: 'filtersFilePop.resetFilters',
-                                        })}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div></div>
-                    )}
-
-                    {showSettingsPopUp != false ? (
-                        <div className={style.settingsStoryPopUpBackground}>
-                            <div className={style.settingsStoryPopUp}>
-                                <div className={style.settingsStoryPopUpHeader}>
-                                    <h2>{intl.formatMessage({ id: 'sendFileStory.settingsStoryPopUpH2' })}</h2>
+                    {/* {showFiltersPopUp != false ? ( */}
+                    <div
+                        className={` ${style.filtersStoryPopUpBackground} ${showFiltersPopUp == true ? style.filtersStoryPopUpBackgroundShow : ''}`}
+                    >
+                        <div className={style.filtersStoryPopUp}>
+                            <div className={style.filtersStoryPopUpMain}>
+                                <div className={style.filtersStoryPopUpHeader}>
+                                    <h2>{intl.formatMessage({ id: 'filtersFilePop.titleH2' })}</h2>
 
                                     <button
                                         type="button"
-                                        onClick={() => closeSettingsPopUpFun()}
+                                        onClick={() => closeFiltersPopUpFun()}
                                         className={style.buttonFilePopUpClose}
                                     >
                                         <svg
@@ -658,66 +589,217 @@ export default function SendFileStory() {
                                     </button>
                                 </div>
 
-                                <div className={style.settingsStoryPopUpOptions}>
-                                    <div className={style.settingsStoryPopUpOptionBlock}>
-                                        <button
-                                            type="button"
-                                            onClick={() => showMessageDeletePopUpFun()}
-                                            className={` ${style.settingsStoryPopUpOptionButton} ${style.delete} `}
+                                <div className={style.filtersStoryPopUpOptions}>
+                                    <div className={style.filtersStoryPopUpOptionBlock}>
+                                        <input
+                                            type="date"
+                                            className={style.inputFiltersDate}
+                                            value={filters.date}
+                                            onChange={(e) => dateParser(e)}
+                                            name="date"
+                                        />
+
+                                        <select
+                                            className={style.selectOptionStyle}
+                                            value={filters.type}
+                                            onChange={(e) => setFilters({ ...filters, type: e.target.value })}
                                         >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="30px"
-                                                viewBox="0 -960 960 960"
-                                                width="30px"
-                                                fill="var(--color-red-100)"
-                                            >
-                                                <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                                            </svg>
-                                            {intl.formatMessage({
-                                                id: 'sendFileStory.settingsStoryPopUp.clearAllHistory',
+                                            <option value="all">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfilters.all',
+                                                })}
+                                            </option>
+                                            <option value="file">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfilters.files',
+                                                })}
+                                            </option>
+                                            <option value="text">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfilters.texts',
+                                                })}
+                                            </option>
+                                        </select>
+
+                                        <select
+                                            className={style.selectOptionStyle}
+                                            value={filters.status}
+                                            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                                        >
+                                            <option value="all">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfiltersStatus.all',
+                                                })}
+                                            </option>
+                                            <option value="sent">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfiltersStatus.sent',
+                                                })}
+                                            </option>
+                                            <option value="accepted">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfiltersStatus.accepted',
+                                                })}
+                                            </option>
+                                            <option value="refusal">
+                                                {intl.formatMessage({
+                                                    id: 'filtersFilePop.selectOptionfiltersStatus.refusal',
+                                                })}
+                                            </option>
+                                        </select>
+
+                                        <input
+                                            type="text"
+                                            className={style.inputFiltersText}
+                                            value={filters.sentToUser}
+                                            onChange={(e) => setFilters({ ...filters, sentToUser: e.target.value })}
+                                            name="sentToUser"
+                                            placeholder={intl.formatMessage({
+                                                id: 'filtersFilePop.selectOptionfilters.sentToUserNames',
                                             })}
-                                        </button>
+                                        />
                                     </div>
                                 </div>
                             </div>
+
+                            <div className={style.filtersStoryPopUpButtons}>
+                                <button
+                                    type="button"
+                                    onClick={() => filesResetFiltersFun()}
+                                    className={style.styleButtonResetFilters}
+                                >
+                                    {intl.formatMessage({
+                                        id: 'filtersFilePop.resetFilters',
+                                    })}
+                                </button>
+                            </div>
                         </div>
-                    ) : (
+                    </div>
+                    {/* ) : (
                         <div></div>
-                    )}
+                    )} */}
 
-                    {showMessageSettingsPopUp != false ? (
-                        <div className={style.messageDeleteStoryPopUpBackground}>
-                            <div className={style.messageDeleteStoryPopUp}>
-                                <div className={style.messageDeleteStoryPopUpHeader}>
-                                    <h2>{intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUpH2' })}</h2>
+                    {/* {showSettingsPopUp != false ? ( */}
+                    <div
+                        className={` ${style.settingsStoryPopUpBackground}  ${showSettingsPopUp != false ? style.settingsStoryPopUpBackgroundShow : ''}`}
+                    >
+                        <div className={style.settingsStoryPopUp}>
+                            <div className={style.settingsStoryPopUpHeader}>
+                                <h2>{intl.formatMessage({ id: 'sendFileStory.settingsStoryPopUpH2' })}</h2>
 
-                                    <span>
-                                        {intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUpSpan' })}
-                                    </span>
-                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => closeSettingsPopUpFun()}
+                                    className={style.buttonFilePopUpClose}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="30px"
+                                        viewBox="0 -960 960 960"
+                                        width="30px"
+                                        fill="var(--color-text)"
+                                    >
+                                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                                    </svg>
+                                </button>
+                            </div>
 
-                                <div className={style.messageDeleteStoryPopUpOptions}>
+                            <div className={style.settingsStoryPopUpOptions}>
+                                <div className={style.settingsStoryPopUpOptionBlock}>
                                     <button
                                         type="button"
-                                        onClick={() => deleteAllFilesStory()}
-                                        className={` ${style.messageDeletePopUpOptionButton} ${style.filesAllDelete} `}
+                                        onClick={() => showMessageDeletePopUpFun()}
+                                        className={` ${style.settingsStoryPopUpOptionButton} ${style.delete} `}
                                     >
-                                        {intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUp.delete' })}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => closeMessageDeletePopUpFun()}
-                                        className={` ${style.messageDeletePopUpOptionButton} `}
-                                    >
-                                        {intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUp.cancel' })}
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            height="30px"
+                                            viewBox="0 -960 960 960"
+                                            width="30px"
+                                            fill="var(--color-red-100)"
+                                        >
+                                            <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                                        </svg>
+                                        {intl.formatMessage({
+                                            id: 'sendFileStory.settingsStoryPopUp.clearAllHistory',
+                                        })}
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    ) : (
+                    </div>
+                    {/* ) : (
                         <div></div>
-                    )}
+                    )} */}
+
+                    {/* {showMessageSettingsPopUp != false ? ( */}
+                    <div
+                        className={` ${style.messageDeleteStoryPopUpBackground}  ${showMessageSettingsPopUp != false ? style.messageDeleteStoryPopUpBackgroundShow : ''} `}
+                    >
+                        <div className={style.messageDeleteStoryPopUp}>
+                            <div className={style.messageDeleteStoryPopUpHeader}>
+                                <h2>{intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUpH2' })}</h2>
+
+                                <span>{intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUpSpan' })}</span>
+                            </div>
+
+                            <div className={style.messageDeleteStoryPopUpOptions}>
+                                <button
+                                    type="button"
+                                    onClick={() => deleteAllFilesStory()}
+                                    className={` ${style.messageDeletePopUpOptionButtonСancel} `}
+                                >
+                                    {intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUp.delete' })}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => closeMessageDeletePopUpFun()}
+                                    className={` ${style.messageDeletePopUpOptionButton} `}
+                                >
+                                    {intl.formatMessage({ id: 'sendFileStory.messageDeleteStoryPopUp.cancel' })}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {/* ) : (
+                        <div></div>
+                    )} */}
+
+                    <div
+                        className={` ${style.messageDeleteFileStoryPopUpBackground} ${messageDeleteFileStoryPopUp['show'] != false ? style.messageDeleteFileStoryPopUpBackgroundShow : ''} `}
+                    >
+                        <div className={style.messageDeleteFileStoryPopUp}>
+                            <div className={style.messageDeleteFileStoryPopUpHeader}>
+                                <h2>
+                                    {intl.formatMessage({ id: 'getFileStory.messageDeleteFileStoryPopUpH2' })}{' '}
+                                    <span className={style.messageDeleteFileStoryPopUpFilename}>
+                                        {messageDeleteFileStoryPopUp['filename']}
+                                    </span>
+                                </h2>
+
+                                <span>
+                                    {intl.formatMessage({ id: 'getFileStory.messageDeleteFileStoryPopUpSpan' })}
+                                </span>
+                            </div>
+
+                            <div className={style.messageDeleteFileStoryPopUpOptions}>
+                                <button
+                                    type="button"
+                                    onClick={() => deleteFileStory(messageDeleteFileStoryPopUp['id'])}
+                                    className={` ${style.messageDeleteFileStoryPopUpOptionButtonСancel}`}
+                                >
+                                    {intl.formatMessage({ id: 'getFileStory.messageDeleteFileStoryPopUp.delete' })}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => closeMessageDeleteFileStoryPopUp()}
+                                    className={` ${style.messageDeleteFileStoryPopUpOptionButton} `}
+                                >
+                                    {intl.formatMessage({ id: 'getFileStory.messageDeleteFileStoryPopUp.cancel' })}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className={style.formHead}>
                         <div className={style.navigationPage}>
@@ -834,38 +916,82 @@ export default function SendFileStory() {
                         <div className={style.fileStoryViewBlock}>
                             {JSON.stringify(filteredFileStory) != JSON.stringify([]) ? (
                                 filteredFileStory?.map((file, index) => (
-                                    <div key={index} className={style.fileItem}>
+                                    <div key={file.id} className={style.fileItem}>
                                         {file.filename != undefined ? (
                                             <div className={style.fileBlock}>
-                                                <div className={style.fileIcon}>
-                                                    <svg
-                                                        width="35"
-                                                        height="35"
-                                                        viewBox="0 0 100 100"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <g clipPath="url(#clip0_358_516)">
-                                                            <path
-                                                                d="M60 30L60.0127 30.5146C60.2805 35.7983 64.6498 40 70 40H100V90C100 95.5228 95.5229 100 90 100H10C4.47715 100 0 95.5228 0 90V10C1.03081e-06 4.47715 4.47715 0 10 0H60V30ZM97.7861 36H70C66.6863 36 64 33.3137 64 30V2.21289L97.7861 36Z"
-                                                                fill="#ADADAD"
-                                                            />
-                                                        </g>
-                                                        <defs>
-                                                            <clipPath id="clip0_358_516">
-                                                                <rect width="100" height="100" fill="white" />
-                                                            </clipPath>
-                                                        </defs>
-                                                    </svg>
+                                                <div className={style.fileMain}>
+                                                    <div className={style.fileIcon}>
+                                                        <svg
+                                                            width="35"
+                                                            height="35"
+                                                            viewBox="0 0 100 100"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <g clipPath="url(#clip0_358_516)">
+                                                                <path
+                                                                    d="M60 30L60.0127 30.5146C60.2805 35.7983 64.6498 40 70 40H100V90C100 95.5228 95.5229 100 90 100H10C4.47715 100 0 95.5228 0 90V10C1.03081e-06 4.47715 4.47715 0 10 0H60V30ZM97.7861 36H70C66.6863 36 64 33.3137 64 30V2.21289L97.7861 36Z"
+                                                                    fill="#ADADAD"
+                                                                />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_358_516">
+                                                                    <rect width="100" height="100" fill="white" />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div className={style.fileNameBlock}>
+                                                        <span className={style.fileName}>{file.filename}</span>
+                                                    </div>
                                                 </div>
 
-                                                <div>
-                                                    <span className={style.fileName}>{file.filename}</span>
+                                                <div className={style.fileAdditionally}>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => openFileAdditionallyMenuFun(file.id)}
+                                                        className={style.openFileAdditionallyMenu}
+                                                    >
+                                                        <svg
+                                                            width="25"
+                                                            height="25"
+                                                            viewBox="0 0 40 40"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <circle cx="8" cy="20" r="3" fill="var(--color-text)" />
+                                                            <circle cx="20" cy="20" r="3" fill="var(--color-text)" />
+                                                            <circle cx="32" cy="20" r="3" fill="var(--color-text)" />
+                                                        </svg>
+                                                    </button>
                                                 </div>
                                             </div>
                                         ) : file.text != undefined ? (
                                             <div className={style.textBlock}>
-                                                <span>{file.text}</span>
+                                                <div className={style.textMain}>
+                                                    <span>{file.text}</span>
+                                                </div>
+
+                                                <div className={style.fileAdditionally}>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => openFileAdditionallyMenuFun(file.id)}
+                                                        className={style.openFileAdditionallyMenu}
+                                                    >
+                                                        <svg
+                                                            width="25"
+                                                            height="25"
+                                                            viewBox="0 0 40 40"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <circle cx="8" cy="20" r="3" fill="var(--color-text)" />
+                                                            <circle cx="20" cy="20" r="3" fill="var(--color-text)" />
+                                                            <circle cx="32" cy="20" r="3" fill="var(--color-text)" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
                                         ) : (
                                             <div></div>
@@ -874,12 +1000,12 @@ export default function SendFileStory() {
                                         <div className={style.fileInfo}>
                                             <span className={style.fileInfoText}>
                                                 {intl.formatMessage({ id: 'getfilePage.file.sentToUser' })}:{' '}
-                                                {file.sentToUser == 'Гость'
+                                                {file.sentToUser == 'guest'
                                                     ? ((file.sentToUser = intl.formatMessage({
                                                           id: 'userIsGuest.username',
                                                       })),
                                                       file.sentToUser)
-                                                    : file.sentToUser == 'Удалённый аккаунт'
+                                                    : file.sentToUser == 'deletedAccount'
                                                       ? ((file.sentToUser = intl.formatMessage({
                                                             id: 'userIsDelete.username',
                                                         })),
@@ -891,12 +1017,12 @@ export default function SendFileStory() {
                                                     id: 'getfilePage.file.userWillReceive',
                                                 })}
                                                 :{' '}
-                                                {file.userWillReceive == 'Гость'
+                                                {file.userWillReceive == 'guest'
                                                     ? ((file.userWillReceive = intl.formatMessage({
                                                           id: 'userIsGuest.username',
                                                       })),
                                                       file.userWillReceive)
-                                                    : file.userWillReceive == 'Удалённый аккаунт'
+                                                    : file.userWillReceive == 'deletedAccount'
                                                       ? ((file.userWillReceive = intl.formatMessage({
                                                             id: 'userIsDelete.username',
                                                         })),
@@ -945,7 +1071,7 @@ export default function SendFileStory() {
                                             )}
                                         </div>
 
-                                        <div className={style.fileButtons}>
+                                        {/* <div className={style.fileButtons}>
                                             <button
                                                 type="button"
                                                 onClick={() => deleteFileStory(file.id)}
@@ -965,6 +1091,31 @@ export default function SendFileStory() {
                                             ) : (
                                                 <div></div>
                                             )}
+                                        </div> */}
+
+                                        <div
+                                            className={` ${style.fileAdditionallyMenuPopUp} ${fileAdditionallyMenuPopUpShow[file.id] ? style.fileAdditionallyMenuPopUpShow : ''}`}
+                                            style={{ bottom: file.status == 'sent' ? 100 : 120 }}
+                                        >
+                                            {file.status == 'sent' ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => deleteSentFile(file.id, file.userWillReceiveId)}
+                                                    className={` ${style.buttonFileStoryAdditionallyMenuOption} `}
+                                                >
+                                                    {intl.formatMessage({ id: 'sendFileStory.file.cancelSending' })}
+                                                </button>
+                                            ) : (
+                                                <></>
+                                            )}
+
+                                            <button
+                                                type="button"
+                                                onClick={() => showMessageDeleteFileStoryPopUp(file.id, file.filename)}
+                                                className={` ${style.buttonFileDeleteStoryAdditionallyMenuOption} `}
+                                            >
+                                                {intl.formatMessage({ id: 'getFileStory.file.delete' })}
+                                            </button>
                                         </div>
                                     </div>
                                 ))

@@ -18,16 +18,26 @@ export async function POST(
                 withCredentials: true 
             });
 
+            console.log(JSON.stringify(response.headers));
+
+            const headers = new Headers([])
+
+            const cookie = response.headers['set-cookie']
+
+            if (cookie != undefined) {
+
+                for (let i = 0; i < cookie.length; i++) {
+                    const element = cookie[i];
+                    console.log(['Set-Cookie', element]);
+                    headers.append('Set-Cookie', element)
+                }
+            }
+
             console.log(JSON.stringify(response.data));
 
-            const headers = new Headers([
-                ['Set-Cookie', `token=${response.data.token}; HttpOnly; Secure; SameSite=Lax; Path=/`],
-                ['Set-Cookie', `recoveringGuestToken=${response.data.token}; HttpOnly; Secure; SameSite=Lax; Path=/`]
-            ])
-            
-            const res = new Response(JSON.stringify(response.data), {
+            const res = new NextResponse(JSON.stringify(response.data), {
                 headers: headers
-            });
+            })
         
             return res;
         } else {

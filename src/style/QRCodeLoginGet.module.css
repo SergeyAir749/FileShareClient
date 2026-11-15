@@ -1,0 +1,302 @@
+.QRCodeLoginGet {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formQRCodeLoginGet {
+    position: relative;
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-gray-600);
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.formHead {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+    padding-top: 20px;
+}
+
+.formTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formTitle h2 {
+    color: var(--color-text);
+    text-align: center;
+}
+
+.formTitle p {
+    color: var(--color-gray-150);
+    text-align: center;
+}
+
+.formBody {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.QRCodeImgBlock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.QRCodeImgBlock img {
+    image-rendering: pixelated;
+    border: 1.5px solid var(--color-gray-250);
+    border-radius: 20px;
+    width: 270px;
+}
+
+
+.formBodyIsLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 50px;
+}
+
+.userAvatarBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.userLoginloader {
+    position: absolute;
+    animation: load linear 2s infinite; 
+}
+
+.userAvatarImgDesktop {
+    width: 170px;
+    border-radius: 100px;
+}
+
+@keyframes load {
+    0% { 
+        transform: rotate(0deg); 
+    }
+
+    100% { 
+        transform: rotate(360deg); 
+    }    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+.formButtons {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    gap: 20px;
+}
+
+.buttonSubmit {
+    background-color: var(--color-blue-500);
+    border: none;
+    color: #ffffff;
+    border-radius: 100px;
+    padding: 10px 30px;
+    transition: 0.2s all ;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.buttonSubmit:hover {
+    background-color: var(--color-blue-600);
+}
+
+.buttonSubmit:active {
+    background-color: var(--color-blue-500);
+}
+
+
+
+.formLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+
+
+
+
+.error {
+    text-align: center;
+    color: var(--color-red-100);
+}
+
+.loginByButton {
+    text-align: start;
+    color: var(--color-gray-150);
+    font-size: 16px;
+    background: none;
+    border: none;
+    transition: 0.2s all ;
+}
+
+.loginByButton:hover {
+    color: var(--color-gray-100);
+}
+
+.loginByButton:active {
+    color: var(--color-gray-150);
+}
+
+
+
+
+
+.buttonLink {
+    text-align: start;
+    color: var(--color-gray-150);
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s all ;
+}
+
+.buttonLink:hover {
+    color: var(--color-gray-100);
+}
+
+.buttonLink:active {
+    color: var(--color-gray-150);
+}
+
+
+
+.Link {
+    color: var(--color-gray-150);
+    font-size: 16px;
+    text-decoration: none;
+    transition: 0.2s all ;
+}
+
+.Link:hover {
+    color: var(--color-gray-200);
+}
+
+.Link:active {
+    color: var(--color-gray-150);
+}
+
+
+
+
+
+
+
+
+.formLoaderBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+}
+
+.formLoader {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.formLoaderImg {
+    width: 75px;
+    animation: load linear 2s infinite; 
+}
+
+@keyframes load {
+    0% { 
+        transform: rotate(0deg); 
+    }
+    
+    100% { 
+        transform: rotate(360deg); 
+    }    
+    
+}
+
+
+
+
+
+@media (max-width: 500px) {
+    .formQRCodeLoginGet {
+        width: 100%;
+        border: none;
+        border-radius: 0px;
+        padding: 80px 30px 40px 30px;
+    }
+
+    .formLoaderBackground {
+        position: fixed;
+    }
+
+    .QRCodeLoginGet {
+        align-items: start;
+        background-color: var(--color-bg);
+    }
+}
+
+
+@media (max-width: 400px) {
+    .formQRCodeLoginGet {
+        width: 100%;
+        border: none;
+        border-radius: 0px;
+        padding: 50px 25px 40px 25px;
+    }
+
+    .formLoaderBackground {
+        position: fixed;
+    }
+
+    .QRCodeLoginGet {
+        align-items: start;
+        background-color: var(--color-bg);
+    }
+}

@@ -1,0 +1,317 @@
+.twoFactorAuthVerification {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-900);
+}
+
+.formTwoFactorAuthVerification {
+    position: relative;
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-gray-600);
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.formHead {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+    padding-top: 30px;
+}
+
+.formTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formHead h2 {
+    color: var(--color-text);
+    text-align: center;
+}
+
+.formHead p {
+    color: var(--color-gray-150);
+    text-align: center;
+}
+
+.formHead span {
+    color: var(--color-text);
+    text-align: center;
+}
+
+.formInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputStyle {
+    background-color: var(--color-gray-900);
+    border: 1px solid var(--color-gray-600);
+    color: var(--color-text);
+    border-radius: 100px;
+    padding: 10px 15px;
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+}
+
+.inputStylePassword {
+    background-color: var(--color-gray-900);
+    border: 1px solid var(--color-gray-600);
+    color: var(--color-text);
+    border-radius: 100px 0px 0px 100px;
+    padding: 10px 15px;
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+}
+
+
+.buttonStylePassword {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-900);
+    border: 1px solid var(--color-gray-600);
+    border-left: none;
+    border-radius: 0px 100px 100px 0px;
+    padding: 0px 10px;
+}
+
+.passwordBlock {
+    display: flex;
+}
+
+
+
+
+.currentName {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.currentName h3 {
+    font-size: 16px;
+    color: var(--color-text);
+}
+
+.currentName span {
+    font-size: 16px;
+    color: var(--color-gray-100)
+}
+
+
+
+
+.formButtons {
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    gap: 20px;
+}
+
+.buttonSubmit {
+    background-color: var(--color-blue-500);
+    border: none;
+    color: var(--color-width);
+    border-radius: 100px;
+    padding: 10px 30px;
+    transition: 0.2s all ;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.buttonSubmit:hover {
+    background-color: var(--color-blue-600);
+}
+
+.buttonSubmit:active {
+    background-color: var(--color-blue-500);
+}
+
+
+.buttonCancel {
+    background-color: var(--color-gray-700);
+    border: none;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 12px 15px;
+    transition: 0.2s all ;
+    outline: none;
+    width: 100%;
+}
+
+.buttonCancel:hover {
+    background-color: var(--color-gray-600);
+}
+
+.buttonCancel:active {
+    background-color: var(--color-gray-700);
+}
+
+
+
+
+/* 
+.buttonGetТewСode {
+    background-color: var(--color-gray-700);
+    border: none;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 12px 15px;
+    transition: 0.2s all ;
+    outline: none;
+    width: 100%;
+}
+
+.buttonGetТewСode:hover {
+    background-color: var(--color-gray-600);
+}
+
+.buttonGetТewСode:active {
+    background-color: var(--color-gray-700);
+}
+
+
+ */
+
+
+.formLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    gap: 15px;
+}
+
+
+
+
+
+.error {
+    color: var(--color-red-100)
+}
+
+.message {
+    color: var(--color-bg);
+}
+
+.loginByButton {
+    text-align: start;
+    color: var(--color-gray-150);
+    font-size: 16px;
+    background: none;
+    border: none;
+}
+
+
+.Link {
+    font-size: 16px;
+    color: var(--color-gray-150);
+    text-decoration: none;
+    transition: 0.2s all ;
+}
+
+.Link:hover {
+    color: var(--color-gray-100);
+}
+
+.Link:active {
+    color: var(--color-gray-150);
+}
+
+
+
+
+
+
+
+
+
+.formLoaderBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+}
+
+.formLoader {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.formLoaderImg {
+  width: 75px;
+  animation: load linear 2s infinite; 
+}
+
+@keyframes load {
+    0% { 
+        transform: rotate(0deg); 
+    }
+
+    100% { 
+        transform: rotate(360deg); 
+    }    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 500px) {
+    
+    .formTwoFactorAuthVerification {
+        width: 100%;
+        border: none;
+        border-radius: 0px;
+        /* padding-top: 100px; */
+        padding: 100px 25px 40px 25px;
+    }
+
+    .formLoaderBackground {
+        position: fixed;
+    }
+
+    .twoFactorAuthVerification {
+        align-items: start;
+        background-color: var(--color-bg);
+    }
+
+}

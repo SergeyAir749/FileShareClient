@@ -9,7 +9,7 @@
     width: 400px;
 }
 
-.formSendFile {
+.pageSendfile {
     display: flex;
     flex-direction: column;
     padding-top: 20px;
@@ -18,7 +18,7 @@
 .formHead {
     display: flex;
     flex-direction: column;
-    padding-bottom: 50px;
+    padding-bottom: 35px;
 }
 
 .formIcon {
@@ -50,7 +50,7 @@
 .formInputs {
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
+    /* padding-top: 20px; */
     gap: 20px;
 }
 
@@ -67,7 +67,8 @@
 .styleTextareaInput {
     /* height: 200px; */
     background-color: var(--color-gray-950);
-    border: 1px solid var(--color-gray-600);
+    border: none;
+    /* border: 1px solid var(--color-gray-600); */
     color: var(--color-text);
     border-radius: 20px;
     padding: 13px 15px;
@@ -87,7 +88,8 @@
     display: flex;
     align-items: center;
     background-color: var(--color-gray-800);
-    border: 1px solid var(--color-gray-500);
+    border: none;
+    /* border: 1px solid var(--color-gray-500); */
     /* border: 1px solid #393939; */
     border-radius: 100px;
     padding: 10px;
@@ -146,7 +148,8 @@
 
 .selectOptionStyle {
     background-color: var(--color-gray-950);
-    border: 1px solid var(--color-gray-600);
+    border: none;
+    /* border: 1px solid var(--color-gray-600); */
     /* border: 1px solid #2e2e2e; */
     color: var(--color-gray-250);
     font-size: 16px;
@@ -182,7 +185,7 @@
 .formButtons {
     display: flex;
     flex-direction: column;
-    padding-top: 100px;
+    padding-top: 70px;
     gap: 10px;
 }
 
@@ -286,7 +289,7 @@
 .notFile {
     display: flex;
     justify-content: center;
-    padding-bottom: 10px;
+    padding-bottom: 40px;
     color: var(--color-width);
     gap: 10px;
 }
@@ -296,7 +299,8 @@
     display: flex;
     flex-direction: column;
 
-    border: 1px solid var(--color-gray-600);
+    /* border: 1px solid var(--color-gray-600); */
+    border: none;
     background-color: var(--color-gray-950);
     border-radius: 15px;
     padding: 20px;
@@ -383,7 +387,8 @@
 
 .styleInputDeviceID {
     background-color: var(--color-gray-950);
-    border: 1px solid var(--color-gray-600);
+    border: none;
+    /* border: 1px solid var(--color-gray-600); */
     border-right: 0px; 
     color: var(--color-text);
     border-radius: 100px;
@@ -400,7 +405,8 @@
     align-items: center;
     justify-content: center;
     background-color: var(--color-gray-950);
-    border: 1px solid var(--color-gray-600);
+    border: none;
+    /* border: 1px solid var(--color-gray-600); */
     border-left: 0px; 
     color: var(--color-text);
     border-radius: 100px;
@@ -432,21 +438,32 @@
 
 
 
+
+
+
+.indentBlock {
+    padding-bottom: 150px;
+}
+
 .navExchangeBlock {
     display: flex;
     justify-content: center;
-    padding-bottom: 100px;
-    padding-top: 70px;
+    /* padding-bottom: 100px;
+    padding-top: 70px; */
+    position: relative;
 }
 
 .navExchange {
     display: flex;
-    width: 100%;
+    width: 400px;
     justify-content: space-between;
-    background-color: var(--color-gray-700);
+    background-color: var(--color-nav-exchange-bg);
     padding: 5px;
     border-radius: 50px;
     /* gap: 20px; */
+    position: fixed;
+    bottom: 35px;
+    backdrop-filter: blur(20px);
 }
 
 .LinkExchange {
@@ -839,6 +856,9 @@
         width: 350px;
     }
 
+    .navExchange {
+        width: 350px;
+    }
 }
 
 @media (max-width: 380px) {

@@ -5,29 +5,29 @@
     width: 100%;
 }
 
-.blockForm {
+.pageContent {
     width: 400px;
 }
 
-.formGetfile {
+.pageGetfile {
     display: flex;
     flex-direction: column;
     padding-top: 20px;
 }
 
-.formHead {
+.pageHead {
     display: flex;
     flex-direction: column;
 }
 
-.formIcon {
+.pageIcon {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 10px;
 }
 
-.formTitle {
+.pageTitle {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,11 +36,11 @@
     gap: 10px;
 }
 
-.formTitle h2 {
+.pageTitle h2 {
     text-align: center;
 }
 
-.formTitle p {
+.pageTitle p {
     text-align: center;
     color: var(--color-gray-150);
 }
@@ -79,7 +79,22 @@
     height: 100%; 
     background-color: var(--color-black-transparent-45);
     z-index: 9998;
+
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s all;
 }  
+
+.getFilePopUpBackgroundShow {
+    opacity: 1;
+    visibility: visible;
+}
+
+.getFilePopUpBackgroundСlose {
+    opacity: 0;
+    visibility: hidden;
+}
 
 .getFilePopUp {
     display: flex;
@@ -177,7 +192,7 @@
     background: none;
     border: none;
     color: var(--color-blue-300);
-    transition: all 0.2s;
+    transition: 0.2s all;
     font-size: 16px;
 }
 
@@ -295,7 +310,8 @@
 .textBlock {
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid var(--color-gray-300);
+    /* border: 1px solid var(--color-gray-300); */
+    background-color: var(--color-gray-700);
     word-break: break-all;
     border-radius: 10px;
 }
@@ -500,7 +516,11 @@
     height: 100vh;
     background-color: var(--color-black-transparent-45);
     z-index: 9999;
-}
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.2s all;
+}  
 
 .filtersGetFilePopUp {
     display: flex;
@@ -510,9 +530,14 @@
     height: 550px;
     padding: 10px;
     background-color: var(--color-gray-700);
-    border: 1px solid var(--color-gray-600);
+    border: 1px solid var(--color-gray-950);
     border-radius: 20px;
 }
+
+.filtersGetFilePopUpShow {    
+    opacity: 1;
+    visibility: visible;
+}  
 
 .filtersGetFilePopUpHeader {
     display: flex;
@@ -694,11 +719,6 @@
 
 
 
-.userDataBlock {
-    padding-top: 100px;
-    padding-bottom: 140px;
-}
-
 
 .formInputs {
     display: flex;
@@ -739,12 +759,20 @@
 
 
 
-.userIdBlock {
+.userDataBlock {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: var(--color-text);
-    gap: 20px;
+    gap: 12px;
+    padding-top: 100px;;
+    padding-bottom: 140px;
+}
+
+.userIdBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .userId {
@@ -771,18 +799,22 @@
 .navExchangeBlock {
     display: flex;
     justify-content: center;
-    padding-bottom: 100px;
-    padding-top: 70px;
+    /* padding-bottom: 100px;
+    padding-top: 70px; */
+    position: relative;
 }
 
 .navExchange {
     display: flex;
-    width: 100%;
+    width: 400px;
     justify-content: space-between;
-    background-color: var(--color-gray-700);
+    background-color: var(--color-nav-exchange-bg);
     padding: 5px;
     border-radius: 50px;
     /* gap: 20px; */
+    position: fixed;
+    bottom: 35px;
+    backdrop-filter: blur(20px);
 }
 
 .LinkExchange {
@@ -844,11 +876,20 @@
         align-items: start;
     }
 
+    .userDataBlock {
+        padding-top: 50px;
+        padding-bottom: 140px;
+    }
+
 }
 
 @media (max-width: 430px) {
 
-    .blockForm {
+    .pageContent{
+        width: 350px;
+    }
+
+    .navExchange {
         width: 350px;
     }
 
@@ -861,7 +902,7 @@
         align-items: start;
     }
 
-    .blockForm {
+    .pageContent {
         width: 350px;
     }
 

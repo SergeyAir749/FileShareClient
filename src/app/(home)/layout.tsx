@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 // import '@/style/global.css';
-import style from '@/style/layout.home.module.css';
+import styleLayout from '@/style/layout.home.module.css';
 import { useAppSelector, useAppDispatch } from '@/components/hooks';
 import { useEffect, useState } from 'react';
 
@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { getUserDataServer, signupGuestServer } from '@/components/layoutActions';
 import { useTheme } from 'next-themes';
 import { setThemeFun } from '@/components/layoutActionsClient';
+import { Loading } from '@/components/loader';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const [showBurgerMenu, setShowBurgerMenu] = useState(false);
@@ -94,10 +95,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     }, []);
 
     return (
-        <div className={style.home}>
-            <header className={style.header}>
-                <Link href={'/sendfile'} className={style.headerHomeLink}>
-                    <div className={style.headerTitle}>
+        <div className={styleLayout.home}>
+            <header className={styleLayout.header}>
+                <Link href={'/sendfile'} className={styleLayout.headerHomeLink}>
+                    <div className={styleLayout.headerTitle}>
                         <svg width="50" height="50" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fillRule="evenodd"
@@ -127,32 +128,31 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     </div>
                 </Link>
 
-                <nav className={`${style.nav} ${style.desktopMenu}`}>
+                <nav className={`${styleLayout.nav} ${styleLayout.desktopMenu}`}>
                     {isAuth == false ? (
                         <div></div>
                     ) : userData?.isGuest == undefined ? (
-                        <nav className={style.nav}>
-                            <Link className={style.Link} href="/sendfile">
+                        <nav className={styleLayout.nav}>
+                            <Link className={styleLayout.Link} href="/sendfile">
                                 {intl.formatMessage({ id: 'home.layout.linkSendFile' })}
                             </Link>
-                            <a className={style.Link} href="/getfile">
+                            <a className={styleLayout.Link} href="/getfile">
                                 {intl.formatMessage({ id: 'home.layout.linkGetFile' })}
                             </a>
-                            <Link className={style.Link} href="/story">
+                            <Link className={styleLayout.Link} href="/story">
                                 {intl.formatMessage({ id: 'home.layout.linkStory' })}
                             </Link>
-                            <Link className={style.Link} href="/settings">
+                            <Link className={styleLayout.Link} href="/settings">
                                 {intl.formatMessage({ id: 'home.layout.linkSettings' })}
                             </Link>
-                            <Link className={style.accountSettingLink} href={'/account'}>
-                                <div className={style.userData}>
-                                    <div className={style.userAvatarBlock}>
+                            <Link className={styleLayout.accountSettingLink} href={'/account'}>
+                                <div className={styleLayout.userData}>
+                                    <div className={styleLayout.userAvatarBlock}>
                                         <img
-                                            className={style.userAvatarImgDesktop}
+                                            className={styleLayout.userAvatarImgDesktop}
                                             src={userData?.avatar[400] as string | undefined}
                                             alt={`Аватар пользователя ${userData?.username}`}
                                         />
-                                        <span className={style.userNameText}>{userData?.username}</span>
                                     </div>
                                 </div>
                             </Link>
@@ -160,31 +160,35 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                             {/* <button className={style.buttonLogOut} onClick={() => logOutFun()}>Выход</button> */}
                         </nav>
                     ) : (
-                        <nav className={style.nav}>
-                            <Link className={style.Link} href="/sendfile">
+                        <nav className={styleLayout.nav}>
+                            <Link className={styleLayout.Link} href="/sendfile">
                                 {intl.formatMessage({ id: 'home.layout.linkSendFile' })}
                             </Link>
-                            <a className={style.Link} href="/getfile">
+                            <a className={styleLayout.Link} href="/getfile">
                                 {intl.formatMessage({ id: 'home.layout.linkGetFile' })}
                             </a>
-                            <Link className={style.Link} href="/story">
+                            <Link className={styleLayout.Link} href="/story">
                                 {intl.formatMessage({ id: 'home.layout.linkStory' })}
                             </Link>
-                            <Link className={style.Link} href="/settings">
+                            <Link className={styleLayout.Link} href="/settings">
                                 {intl.formatMessage({ id: 'home.layout.linkSettings' })}
                             </Link>
-                            <Link className={style.Link} href="/signup">
+                            <Link className={styleLayout.Link} href="/signup">
                                 {intl.formatMessage({ id: 'home.layout.linkSignup' })}
                             </Link>
-                            <Link className={style.Link} href="/login">
+                            <Link className={styleLayout.Link} href="/login">
                                 {intl.formatMessage({ id: 'home.layout.linkLogin' })}
                             </Link>
                         </nav>
                     )}
                 </nav>
 
-                <nav className={`${style.nav} ${style.mobileMenu}`}>
-                    <button type="button" className={style.burgerMenuButton} onClick={() => setShowBurgerMenu(true)}>
+                <nav className={`${styleLayout.nav} ${styleLayout.mobileMenu}`}>
+                    <button
+                        type="button"
+                        className={styleLayout.burgerMenuButton}
+                        onClick={() => setShowBurgerMenu(true)}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             height="24px"
@@ -201,181 +205,150 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <main>
                 {children}
 
-                {showBurgerMenu == true ? (
-                    <div className={style.burgerMenuBackground}>
-                        <div className={style.burgerMenu}>
-                            <div className={style.burgerMenuHead}>
-                                <h2 className={style.burgerMenuTitle}>
-                                    {intl.formatMessage({ id: 'home.layout.burgerMenuTitle' })}
-                                </h2>
+                {/* {showBurgerMenu == true ? ( */}
+                <div
+                    className={`${styleLayout.burgerMenuBackground} ${showBurgerMenu == true ? styleLayout.burgerMenuBackgroundOpen : ''}`}
+                >
+                    <div className={styleLayout.burgerMenu}>
+                        <div className={styleLayout.burgerMenuHead}>
+                            <h2 className={styleLayout.burgerMenuTitle}>
+                                {intl.formatMessage({ id: 'home.layout.burgerMenuTitle' })}
+                            </h2>
 
-                                <button
-                                    type="button"
-                                    className={style.burgerMenuButtonClose}
-                                    onClick={() => setShowBurgerMenu(false)}
+                            <button
+                                type="button"
+                                className={styleLayout.burgerMenuButtonClose}
+                                onClick={() => setShowBurgerMenu(false)}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="30px"
+                                    viewBox="0 -960 960 960"
+                                    width="30px"
+                                    fill="var(--color-text)"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="30px"
-                                        viewBox="0 -960 960 960"
-                                        width="30px"
-                                        fill="var(--color-text)"
+                                    <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <nav className={styleLayout.navBurgerMenu}>
+                            {isAuth == false ? (
+                                <div className={styleLayout.loadingUserData}></div>
+                            ) : userData?.isGuest == undefined ? (
+                                <nav className={styleLayout.navBurgerMenu}>
+                                    <Link
+                                        onClick={() => setShowBurgerMenu(false)}
+                                        className={styleLayout.accountSettingLink}
+                                        href={'/account'}
                                     >
-                                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                                    </svg>
-                                </button>
-                            </div>
+                                        <div className={styleLayout.userDataBlock}>
+                                            <div className={styleLayout.userData}>
+                                                {/* Все аватарки хранятся в S3 из-за чего незьзя сделать конструкцию {`${apiUrl}${userData?.avatar[400] as string | undefined}`} */}
 
-                            <nav className={style.navBurgerMenu}>
-                                {isAuth == false ? (
-                                    <div className={style.loadingUserData}></div>
-                                ) : userData?.isGuest == undefined ? (
-                                    <nav className={style.navBurgerMenu}>
-                                        <Link
-                                            onClick={() => setShowBurgerMenu(false)}
-                                            className={style.accountSettingLink}
-                                            href={'/account'}
-                                        >
-                                            <div className={style.userDataBlock}>
-                                                <div className={style.userData}>
-                                                    {/* Все аватарки хранятся в S3 из-за чего незьзя сделать конструкцию {`${apiUrl}${userData?.avatar[400] as string | undefined}`} */}
-
-                                                    <div className={style.userAvatarBlock}>
-                                                        <img
-                                                            className={style.userAvatarImg}
-                                                            src={userData?.avatar[400] as string | undefined}
-                                                            alt={`Аватар пользователя ${userData?.username}`}
-                                                        />
-                                                    </div>
-
-                                                    <div className={style.userInfoBlock}>
-                                                        <h3 className={style.userName}>{userData?.username}</h3>
-                                                        <span className={style.userEmail}>{userData?.email}</span>
-                                                    </div>
+                                                <div className={styleLayout.userAvatarBlock}>
+                                                    <img
+                                                        className={styleLayout.userAvatarImg}
+                                                        src={userData?.avatar[400] as string | undefined}
+                                                        alt={`Аватар пользователя ${userData?.username}`}
+                                                    />
                                                 </div>
 
-                                                <div className={style.accountSettingBlock}>
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        height="30px"
-                                                        viewBox="0 -960 960 960"
-                                                        width="30px"
-                                                        fill="var(--color-text)"
-                                                    >
-                                                        <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" />
-                                                    </svg>
+                                                <div className={styleLayout.userInfoBlock}>
+                                                    <h3 className={styleLayout.userName}>{userData?.username}</h3>
+                                                    <span className={styleLayout.userEmail}>{userData?.email}</span>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </Link>
+
+                                    <nav className={styleLayout.navBurgerMenuLinks}>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/sendfile"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkSendFile' })}
+                                        </Link>
+                                        <a className={styleLayout.LinkBurgerMenu} href="/getfile">
+                                            {intl.formatMessage({ id: 'home.layout.linkGetFile' })}
+                                        </a>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/story"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkStory' })}
+                                        </Link>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/settings"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkSettings' })}
+                                        </Link>
+                                    </nav>
+                                </nav>
+                            ) : (
+                                <div>
+                                    <nav className={styleLayout.navBurgerMenuLinks}>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/signup"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkSignup' })}
+                                        </Link>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/login"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkLogin' })}
                                         </Link>
 
-                                        <nav className={style.navBurgerMenuLinks}>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/sendfile"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkSendFile' })}
-                                            </Link>
-                                            <a className={style.LinkBurgerMenu} href="/getfile">
-                                                {intl.formatMessage({ id: 'home.layout.linkGetFile' })}
-                                            </a>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/story"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkStory' })}
-                                            </Link>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/settings"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkSettings' })}
-                                            </Link>
-                                        </nav>
-                                    </nav>
-                                ) : (
-                                    <div>
-                                        <nav className={style.navBurgerMenuLinks}>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/signup"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkSignup' })}
-                                            </Link>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/login"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkLogin' })}
-                                            </Link>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/sendfile"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkSendFile' })}
+                                        </Link>
+                                        <a className={styleLayout.LinkBurgerMenu} href="/getfile">
+                                            {intl.formatMessage({ id: 'home.layout.linkGetFile' })}
+                                        </a>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/story"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkStory' })}
+                                        </Link>
+                                        <Link
+                                            onClick={() => setShowBurgerMenu(false)}
+                                            className={styleLayout.LinkBurgerMenu}
+                                            href="/settings"
+                                        >
+                                            {intl.formatMessage({ id: 'home.layout.linkSettings' })}
+                                        </Link>
 
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/sendfile"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkSendFile' })}
-                                            </Link>
-                                            <a className={style.LinkBurgerMenu} href="/getfile">
-                                                {intl.formatMessage({ id: 'home.layout.linkGetFile' })}
-                                            </a>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/story"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkStory' })}
-                                            </Link>
-                                            <Link
-                                                onClick={() => setShowBurgerMenu(false)}
-                                                className={style.LinkBurgerMenu}
-                                                href="/settings"
-                                            >
-                                                {intl.formatMessage({ id: 'home.layout.linkSettings' })}
-                                            </Link>
-
-                                            {/* <button onClick={() => changeLanguageFun("en")}>EN</button>
+                                        {/* <button onClick={() => changeLanguageFun("en")}>EN</button>
                                             <button onClick={() => changeLanguageFun("ru")}>RU</button> */}
-                                        </nav>
-                                    </div>
-                                )}
-                            </nav>
-                        </div>
+                                    </nav>
+                                </div>
+                            )}
+                        </nav>
                     </div>
-                ) : (
+                </div>
+                {/* ) : (
                     <div></div>
-                )}
+                )} */}
             </main>
 
             {userData == null ? (
-                <div className={style.userDataLoaderBackground}>
-                    <div className={style.userDataLoader}>
-                        <svg
-                            width="60"
-                            height="60"
-                            className={style.userDataLoaderImg}
-                            viewBox="0 0 50 50"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <g clipPath="url(#clip0_223_516)">
-                                <circle cx="25" cy="25" r="22.5" stroke="var(--color-blue-900)" strokeWidth="5" />
-                                <path
-                                    d="M34.5524 45.3716C35.1386 46.6217 34.6033 48.1232 33.3009 48.5817C29.1743 50.0343 24.7234 50.3834 20.3948 49.5722C15.2442 48.6069 10.5271 46.0475 6.91016 42.2557C3.29318 38.4638 0.959162 33.6313 0.237921 28.4408C-0.368215 24.0788 0.19048 19.6493 1.83617 15.5958C2.35556 14.3165 3.88066 13.8527 5.10172 14.4972V14.4972C6.32277 15.1417 6.77389 16.6504 6.28665 17.9423C5.1119 21.0571 4.72854 24.4293 5.19034 27.7527C5.76733 31.905 7.63454 35.7711 10.5281 38.8045C13.4217 41.838 17.1954 43.8855 21.3159 44.6578C24.6137 45.2758 28.0003 45.052 31.1671 44.0255C32.4805 43.5997 33.9662 44.1215 34.5524 45.3716V45.3716Z"
-                                    fill="var(--color-blue-300)"
-                                />
-                            </g>
-
-                            <defs>
-                                <clipPath id="clip0_223_516">
-                                    <rect width="50" height="50" fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
+                <div className={styleLayout.userDataLoaderBackground}>
+                    <div className={styleLayout.userDataLoader}>
+                        <Loading />
                     </div>
                 </div>
             ) : (

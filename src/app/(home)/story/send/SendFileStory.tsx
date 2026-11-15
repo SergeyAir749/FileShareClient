@@ -467,7 +467,6 @@ export default function SendFileStory() {
             );
         }
     };
-
     const deleteSentFile = async (id: string, userWillReceiveId: string) => {
         closeMessageDeletePopUpFun();
         closeSettingsPopUpFun();

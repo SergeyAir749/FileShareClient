@@ -5,7 +5,7 @@
 
 export const Loading = () => {
     return (
-        <svg className=".svg" width="60" height="60" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className="svg" width="60" height="60" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_223_516)">
                 <circle cx="25" cy="25" r="22.5" stroke="var(--color-blue-900)" strokeWidth="5" />
                 <circle className="animation" cx="25" cy="25" r="22.5" stroke="var(--color-blue-300)" strokeWidth="5" />

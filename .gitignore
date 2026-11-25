@@ -43,6 +43,7 @@ next-env.d.ts
 
 /src/app/themeColorLayout.tsx
 /src/components/IntlWrapper copy.js
+/src/style/layout.main.module copy.css
 /src/style/global copy.css
 /src/app/(settings)/settings/Settings copy.tsx
 /src/components/cookieSetFun copy.ts

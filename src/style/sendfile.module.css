@@ -477,7 +477,7 @@
 }
 
 .LinkExchange:hover {
-    background-color: var(--color-gray-500);
+    background-color: var(--color-gray-500-60);
 }
 
 .select {

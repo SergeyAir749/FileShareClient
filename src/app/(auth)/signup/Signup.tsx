@@ -156,6 +156,7 @@ export default function Signup() {
                 const userData = {
                     email: email,
                     password: password,
+                    passwordRepeat: passwordRepeat,
                     lang: lang,
                 };
 

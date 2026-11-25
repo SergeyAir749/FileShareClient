@@ -145,10 +145,10 @@ export default function QRCodeLoginGet() {
                 device = 'iPad';
             } else if (/Macintosh/i.test(userAgentString)) {
                 device = 'MacOS';
-            } else if (/Linux/i.test(userAgentString)) {
-                device = 'Linux';
             } else if (/Android/i.test(userAgentString)) {
                 device = 'Android';
+            } else if (/Linux/i.test(userAgentString)) {
+                device = 'Linux';
             } else if (/Windows/i.test(userAgentString)) {
                 device = 'Windows';
             } else {

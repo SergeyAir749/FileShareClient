@@ -43,33 +43,31 @@ export default function DeleteAccount() {
             try {
                 const response = await verifyAccountDeleteSessionServer();
 
-                const localSession = sessionStorage.getItem('session');
-                const serverSession = response.sessionId;
+                console.log(response);
 
-                if (localSession != serverSession) {
-                    router.back();
+                if (response.msg != 'noSessions') {
+                    const localSession = sessionStorage.getItem('session');
+                    const serverSession = response.sessionId;
+
+                    if (localSession != serverSession) {
+                        router.back();
+                    } else {
+                        setIsVerify(true);
+                    }
                 } else {
-                    setIsVerify(true);
+                    location.pathname = '/account/twoFactorAuth/verification';
                 }
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 closeLoaderFun();
+                const serverMessage = error.message;
 
-                if (error.message == 'noSessions') {
-                    location.pathname = '/account/delete/verification';
-                    console.log(error.message);
-                } else {
-                    console.log(error.message);
-
-                    const serverMessage = error.message;
-
-                    setError(
-                        intl.formatMessage({
-                            id: `error.massage.${serverMessage}`,
-                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
-                        })
-                    );
-                }
+                setError(
+                    intl.formatMessage({
+                        id: `error.massage.${serverMessage}`,
+                        defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                    })
+                );
             }
         };
 

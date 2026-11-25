@@ -76,6 +76,8 @@ export default function TwoFactorAuthLogin() {
             const response = await axios.post('/api/login/twoFA/email/verify', userDataLoginParse);
             console.log(response);
 
+            sessionStorage.removeItem('userDataLogin');
+
             location.pathname = '/sendfile';
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

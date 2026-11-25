@@ -119,13 +119,27 @@ export default function ChangePassword() {
                 const userUpData = {
                     passwordOld: passwordOld,
                     passwordNew: passwordNew,
+                    passwordRepeatNew: passwordRepeatNew,
                 };
 
                 //console.log(userUpData);
 
                 const response = await submitChangeUserPasswordServer(userUpData);
 
-                //console.log('Response:', response);
+                if (response.status == false) {
+                    closeLoaderFun();
+                    const serverMessage = response.msg;
+                    console.log('serverMessage:', serverMessage);
+
+                    return setError(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
+                }
+
+                console.log('Response:', response);
 
                 router.push('/sendfile');
 

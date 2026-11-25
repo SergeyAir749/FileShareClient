@@ -16,7 +16,6 @@ import axios from 'axios';
 
 import { useRouter } from 'next/navigation';
 
-import { getUserDataServer, signupGuestServer } from '@/components/layoutActions';
 import { useTheme } from 'next-themes';
 import { setThemeFun } from '@/components/layoutActionsClient';
 import { Loading } from '@/components/loader';

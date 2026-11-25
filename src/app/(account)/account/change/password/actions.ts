@@ -24,12 +24,20 @@ export const submitChangeUserPasswordServer = async (userUpData: object) => {
             const serverMessage = error;
             //console.log(serverMessage);
 
+            // if (serverMessage.response?.data?.msg != undefined) {
+            //     console.log(serverMessage.response?.data?.msg);
+            //     throw new Error(serverMessage.response?.data?.msg);
+            // } else {
+            //     console.log(serverMessage.message);
+            //     throw new Error(serverMessage.message);
+            // }
+
             if (serverMessage.response?.data?.msg != undefined) {
-                console.log(serverMessage.response?.data?.msg);
-                throw new Error(serverMessage.response?.data?.msg);
+                console.log("error:", serverMessage.response?.data?.msg);
+                return {status: false, msg: serverMessage.response?.data?.msg};
             } else {
-                console.log(serverMessage.message);
-                throw new Error(serverMessage.message);
+                // throw new Error(serverMessage.message);
+                return {status: false, msg: serverMessage.message};
             }
         }
     }

@@ -9,7 +9,7 @@ import axios from 'axios';
 import { io, Socket } from 'socket.io-client';
 // import { useTranslations } from "next-intl";
 
-import { upLoadFilesServer, upLoadTextServer, valueShareIdServer } from './actions';
+import { valueShareIdServer } from './actions';
 
 interface recipientDetailsData {
     avatar: {
@@ -166,14 +166,18 @@ function Sendfile() {
         setShareId(value);
 
         try {
-            if (value.length >= 8) {
+            if (value.length >= 7) {
                 setRecipientDetailsDataShow(true);
 
                 const data = await valueShareIdServer(value);
 
                 console.log('Response:', data);
 
-                setRecipientDetails(data);
+                if (data.msg != 'userNotFound') {
+                    setRecipientDetails(data);
+                } else {
+                    setRecipientDetails(null);
+                }
             } else {
                 setRecipientDetails(null);
                 setRecipientDetailsDataShow(false);
@@ -181,14 +185,9 @@ function Sendfile() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             console.log(error);
-            // console.log('Client caught error:', error.message);
 
-            if (error.message == 'userNotFound') {
-                setRecipientDetails(null);
-            } else {
-                setRecipientDetails(null);
-                setRecipientDetailsDataShow(false);
-            }
+            setRecipientDetails(null);
+            setRecipientDetailsDataShow(false);
         }
     };
 
@@ -260,14 +259,14 @@ function Sendfile() {
                     device = 'iPad';
                 } else if (/Macintosh/i.test(userAgentString)) {
                     device = 'MacOS';
-                } else if (/Linux/i.test(userAgentString)) {
-                    device = 'Linux';
                 } else if (/Android/i.test(userAgentString)) {
                     device = 'Android';
+                } else if (/Linux/i.test(userAgentString)) {
+                    device = 'Linux';
                 } else if (/Windows/i.test(userAgentString)) {
                     device = 'Windows';
                 } else {
-                    device = 'Не опредилён';
+                    device = intl.formatMessage({ id: 'deviceNotDefined' });
                 }
 
                 if (option == 'Text') {
@@ -290,21 +289,7 @@ function Sendfile() {
                         formData.append('sentToUserId', sentToUserId as string);
                         formData.append('size', bayt.toString());
 
-                        // const formData = {
-                        //     textValue: text,
-                        //     device: device,
-                        //     data: JSON.stringify(dateObj),
-                        //     username: username,
-                        //     sentToUserId: sentToUserId,
-                        //     size: bayt.toString(),
-                        // };
-
                         console.log(formData);
-
-                        // console.log('Response:', response);
-
-                        // const data = await upLoadTextServer(shareId, obj);
-                        // console.log('Response:', data);
 
                         setProgressBarAggregate(0);
 
@@ -326,10 +311,7 @@ function Sendfile() {
                             socketRef.current.emit('pingfilesShareId', shareId);
                         }
 
-                        // setMessage(intl.formatMessage({ id: 'sendfilePage.massage.sendTextSuccessful' }));
-                        // closeSubmitFileLoaderFun();
                         setSuccessfullySent(true);
-                        // setRecipientDetailsDataShow(false);
                     }
                 } else if (option == 'File') {
                     if (files != null) {
@@ -363,11 +345,6 @@ function Sendfile() {
 
                         setProgressBarAggregate(0);
 
-                        // console.log('Response:', response);
-
-                        // const data = await upLoadFilesServer(shareId, formData);
-                        // console.log('Response:', data);
-
                         // setShareId('');
                         // setText('');
                         // setFiles([]);
@@ -381,10 +358,7 @@ function Sendfile() {
                             socketRef.current.emit('pingfilesShareId', shareId);
                         }
 
-                        // setMessage(intl.formatMessage({ id: 'sendfilePage.massage.sendFileSuccessful' }));
-                        // closeSubmitFileLoaderFun();
                         setSuccessfullySent(true);
-                        // setRecipientDetailsDataShow(false);
                     }
                 }
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any

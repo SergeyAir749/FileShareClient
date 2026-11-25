@@ -49,6 +49,7 @@ export default function SendFileStory() {
     const [timeFormat, setTimeFormat] = useState<string | null>(null);
 
     const [fileAdditionallyMenuPopUpShow, setFileAdditionallyMenuPopUpShow] = useState<Record<string, boolean>>({});
+    const [closeBackgroundAdditionallyMenu, setCloseBackgroundAdditionallyMenu] = useState(false);
 
     const intl = useIntl();
 
@@ -99,6 +100,27 @@ export default function SendFileStory() {
 
             console.log('Response:', response);
 
+            if (response.status == false) {
+                const serverMessage = response.msg;
+                console.log('serverMessage:', serverMessage);
+
+                return setError(
+                    intl.formatMessage({
+                        id: `error.massage.${serverMessage}`,
+                        defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                    })
+                );
+            }
+
+            for (let i = 0; i < response.length; i++) {
+                const element = response[i];
+
+                setFileAdditionallyMenuPopUpShow((prevState) => ({
+                    ...prevState,
+                    [element.id]: false,
+                }));
+            }
+
             setUserFileStory(response);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
@@ -121,6 +143,27 @@ export default function SendFileStory() {
                 const response = await getStorySendFileServer();
 
                 console.log('Response:', response);
+
+                if (response.status == false) {
+                    const serverMessage = response.msg;
+                    console.log('serverMessage:', serverMessage);
+
+                    return setError(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
+                }
+
+                for (let i = 0; i < response.length; i++) {
+                    const element = response[i];
+
+                    setFileAdditionallyMenuPopUpShow((prevState) => ({
+                        ...prevState,
+                        [element.id]: false,
+                    }));
+                }
 
                 setUserFileStory(response);
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -550,11 +593,29 @@ export default function SendFileStory() {
                 ...fileAdditionallyMenuPopUpShow,
                 [id]: true,
             });
+
+            setCloseBackgroundAdditionallyMenu(true);
         } else {
             setFileAdditionallyMenuPopUpShow({
                 ...fileAdditionallyMenuPopUpShow,
                 [id]: false,
             });
+            setCloseBackgroundAdditionallyMenu(false);
+        }
+    };
+
+    const closeAllFileAdditionallyMenuFun = () => {
+        console.log(fileAdditionallyMenuPopUpShow);
+
+        for (let i = 0; i != userFileStory.length; i++) {
+            const element = userFileStory[i];
+
+            setFileAdditionallyMenuPopUpShow((prevState) => ({
+                ...prevState,
+                [element.id]: false,
+            }));
+
+            setCloseBackgroundAdditionallyMenu(false);
         }
     };
 
@@ -856,6 +917,11 @@ export default function SendFileStory() {
                     </div>
 
                     <div className={style.formFileStoryView}>
+                        <div
+                            className={` ${style.closeBackgroundAdditionallyMenu} ${closeBackgroundAdditionallyMenu == true ? style.closeBackgroundAdditionallyMenuShow : ''}`}
+                            onClick={() => closeAllFileAdditionallyMenuFun()}
+                        ></div>
+
                         <div className={style.formFileStoryHead}>
                             <h2>{intl.formatMessage({ id: 'sendFileStory.formFileStoryHeadH2' })}</h2>
 
@@ -1094,7 +1160,7 @@ export default function SendFileStory() {
 
                                         <div
                                             className={` ${style.fileAdditionallyMenuPopUp} ${fileAdditionallyMenuPopUpShow[file.id] ? style.fileAdditionallyMenuPopUpShow : ''}`}
-                                            style={{ bottom: file.status == 'sent' ? 100 : 120 }}
+                                            style={{ bottom: file.status == 'sent' ? 100 : 140 }}
                                         >
                                             {file.status == 'sent' ? (
                                                 <button

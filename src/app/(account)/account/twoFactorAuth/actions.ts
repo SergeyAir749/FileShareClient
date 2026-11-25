@@ -44,30 +44,27 @@ export const verifyTwoFactorAuthSessionServer = async () => {
     const token = cookiesStore.get("token")?.value;
 
     try {
-        const response = await axios.get(
-            apiUrl + '/api/get/session',
-
-            {
-                headers: {
-                    authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-
+        const response = await axios.get(apiUrl + '/api/get/session', {
+            headers: {
+                authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
         return response.data
     } catch (error) {
         console.log(error);
         if (axios.isAxiosError(error)) {
             const serverMessage = error;
-            //console.log(serverMessage);
+            console.log(serverMessage);
 
             if (serverMessage.response?.data?.msg != undefined) {
                 console.log(serverMessage.response?.data?.msg);
-                throw new Error(serverMessage.response?.data?.msg);
+                return {status: false, msg: serverMessage.response?.data?.msg};
+                // throw new Error(serverMessage.response?.data?.msg);
             } else {
                 console.log(serverMessage.message);
-                throw new Error(serverMessage.message);
+                return {status: false, msg: serverMessage.message};
+                // throw new Error(serverMessage.message);
             }
         }
     }
@@ -94,7 +91,7 @@ export const submitEnebaltTwoFactorAuthServer = async (session: object) => {
         console.log(error);
         if (axios.isAxiosError(error)) {
             const serverMessage = error;
-            //console.log(serverMessage);
+            console.log(serverMessage);
 
             if (serverMessage.response?.data?.msg != undefined) {
                 console.log(serverMessage.response?.data?.msg);

@@ -45,7 +45,7 @@ export default function Account() {
             text: intl.formatMessage({ id: 'account.accountSetting.link.change.password' }),
         },
         {
-            link: 'account/twoFactorAuth',
+            link: 'account/twoFactorAuth/verification',
             text: intl.formatMessage({ id: 'account.accountSetting.link.change.twoFactorAuth' }),
         },
         {

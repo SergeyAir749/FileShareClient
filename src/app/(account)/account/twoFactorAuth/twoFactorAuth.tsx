@@ -45,40 +45,46 @@ export default function TwoFactorAuth() {
 
     useEffect(() => {
         const verifyTwoFactorAuthSession = async () => {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
             try {
                 const response = await verifyTwoFactorAuthSessionServer();
 
-                const localSession = sessionStorage.getItem('session');
-                const serverSession = response.sessionId;
+                console.log('Response:', response);
 
-                if (localSession != serverSession) {
-                    router.back();
+                if (response.msg != 'noSessions') {
+                    const localSession = sessionStorage.getItem('session');
+                    const serverSession = response.sessionId;
+
+                    if (localSession != serverSession) {
+                        router.back();
+                    } else {
+                        setIsVerify(true);
+
+                        const response = await getStatusTwoFactorAuthServer();
+                        console.log('Response:', response);
+                        setStatusTwoFactorAuth(response.twoFactorAuthstatus);
+                    }
                 } else {
-                    setIsVerify(true);
-
-                    const response = await getStatusTwoFactorAuthServer();
-                    console.log('Response:', response);
-                    setStatusTwoFactorAuth(response.twoFactorAuthstatus);
+                    location.pathname = '/account/twoFactorAuth/verification';
                 }
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+                //eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 closeLoaderFun();
 
-                if (error.message == 'noSessions') {
-                    location.pathname = '/account/twoFactorAuth/verification';
-                    console.log(error.message);
-                } else {
-                    console.log(error.message);
+                console.log('error:', error);
 
-                    const serverMessage = error.message;
+                // const serverMessage = error.response.data.error || error.message;
+                const serverMessage = error.message;
 
-                    setError(
-                        intl.formatMessage({
-                            id: `error.massage.${serverMessage}`,
-                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
-                        })
-                    );
-                }
+                console.log(serverMessage);
+
+                setError(
+                    intl.formatMessage({
+                        id: `error.massage.${serverMessage}`,
+                        defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                    })
+                );
             }
         };
 

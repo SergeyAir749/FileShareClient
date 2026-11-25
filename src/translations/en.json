@@ -481,7 +481,7 @@
 
   "settingsNav.headerTitleH2": "Settings",
   "settingsNav.link.main": "Main",
-  "settingsNav.link.decor": "Decor",
+  "settingsNav.link.decor": "Design",
   
 
 
@@ -799,12 +799,13 @@
   
   "error.massage.failedToCancelSsending": "Error: failed to cancel sending",
   
+  "error.massage.passwordNotMatch": "Password does not match",
 
   "error.massage.thisAccountHasNotBeenDeleted": "This account has not been deleted",
   "error.massage.accountDeleted": "Account deleted",
 
 
-  "error.massage.sessionError": "Ошибка сессии",
+  "error.massage.sessionError": "Session error",
 
 
 
@@ -824,7 +825,7 @@
   "file.fileWillBeDeleted": "The file will be deleted in 14 days",
 
 
-
+  "deviceNotDefined": "Not defined",
   "pageNotFound": "Page not found",
 
 

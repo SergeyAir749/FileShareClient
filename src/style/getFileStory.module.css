@@ -99,7 +99,8 @@
 
 .inputFiltersText {
     background-color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-900);
+    /* border: 1px solid var(--color-gray-900); */
+    border: none;
     color: var(--color-text);
     border-radius: 100px;
     padding: 12px 15px;
@@ -114,7 +115,8 @@
 
 .inputFilters {
     background-color: var(--color-gray-950);
-    border: 1px solid var(--color-gray-600);
+    /* border: 1px solid var(--color-gray-600); */
+    border: none;
     color: var(--color-text);
     border-radius: 100px;
     padding: 12px 15px;
@@ -129,7 +131,8 @@
 
 .inputFiltersDate {
     background-color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-900);
+    /* border: 1px solid var(--color-gray-900); */
+    border: none;
     color: var(--color-text);
     border-radius: 100px;
     padding: 12px 15px;
@@ -149,7 +152,8 @@
 
 .selectOptionStyle {
     background-color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-900);
+    /* border: 1px solid var(--color-gray-900); */
+    border: none;
     color: var(--color-text);
     font-size: 16px;
     /* color: #9a9a9a; */
@@ -286,6 +290,22 @@
 }
 
 .fileAdditionallyMenuPopUpShow {
+    opacity: 1;
+    visibility: visible;
+}
+
+.closeBackgroundAdditionallyMenu {
+    position: absolute;
+    width: 400px;
+    height: 100vh;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.1s all;
+}
+
+.closeBackgroundAdditionallyMenuShow {
+    z-index: 9999;
     opacity: 1;
     visibility: visible;
 }
@@ -1064,23 +1084,8 @@
 
 @media (max-width: 390px) {
 
-    .settingsStoryPopUpBackground {
-        padding-top: 0px;
-        align-items: start;
-    }
-
-    .filtersStoryPopUpBackground {
-        padding-top: 0px;
-        align-items: start;
-    }
-
     .navStoryOptions {
        width: 300px;
-    }
-
-    .filtersStoryPopUp, .settingsStoryPopUp {
-        height: 100%;
-        border-radius: 0px;
     }
 
     .fileStoryViewBlock {

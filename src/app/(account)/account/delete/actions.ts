@@ -19,9 +19,9 @@ export const verifyAccountDeleteSessionServer = async () => {
                     'Content-Type': 'application/json',
                 },
             }
-        );
+        );        
 
-        return response.data
+        return response.data 
     } catch (error) {
         console.log(error);
         if (axios.isAxiosError(error)) {
@@ -30,10 +30,12 @@ export const verifyAccountDeleteSessionServer = async () => {
 
             if (serverMessage.response?.data?.msg != undefined) {
                 console.log(serverMessage.response?.data?.msg);
-                throw new Error(serverMessage.response?.data?.msg);
+                // throw new Error(serverMessage.response?.data?.msg);
+                return {status: false, msg: serverMessage.response?.data?.msg};
             } else {
                 console.log(serverMessage.message);
-                throw new Error(serverMessage.message);
+                // throw new Error(serverMessage.message);
+                return {status: false, msg: serverMessage.message};
             }
         }
     }

@@ -40,6 +40,7 @@ export default function GetFileStory() {
     const [timeFormat, setTimeFormat] = useState<string | null>(null);
 
     const [fileAdditionallyMenuPopUpShow, setFileAdditionallyMenuPopUpShow] = useState<Record<string, boolean>>({});
+    const [closeBackgroundAdditionallyMenu, setCloseBackgroundAdditionallyMenu] = useState(false);
 
     const intl = useIntl();
 
@@ -68,6 +69,18 @@ export default function GetFileStory() {
     const getStoryGetFile = async () => {
         try {
             const response = await getStoryGetFileServer();
+
+            if (response.status == false) {
+                const serverMessage = response.msg;
+                console.log('serverMessage:', serverMessage);
+
+                return setError(
+                    intl.formatMessage({
+                        id: `error.massage.${serverMessage}`,
+                        defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                    })
+                );
+            }
 
             for (let i = 0; i < response.length; i++) {
                 const element = response[i];
@@ -100,6 +113,20 @@ export default function GetFileStory() {
                 const response = await getStoryGetFileServer();
                 console.log(response);
 
+                if (response.status == false) {
+                    const serverMessage = response.msg;
+                    console.log('serverMessage:', serverMessage);
+
+                    return setError(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
+                }
+
+                console.log(fileAdditionallyMenuPopUpShow);
+
                 for (let i = 0; i != response.length; i++) {
                     const element = response[i];
 
@@ -108,8 +135,6 @@ export default function GetFileStory() {
                         [element.id]: false,
                     }));
                 }
-
-                console.log(fileAdditionallyMenuPopUpShow);
 
                 setUserFileStory(response);
 
@@ -444,10 +469,10 @@ export default function GetFileStory() {
         closeMessageDeletePopUpFun();
         closeSettingsPopUpFun();
 
-                            try {
-                                await deleteFileStoryGetServer(id);
+        try {
+            await deleteFileStoryGetServer(id);
 
-                                //console.log('Response:', response.data);
+            //console.log('Response:', response.data);
 
             getStoryGetFile();
             closeMessageDeleteFileStoryPopUp();
@@ -519,11 +544,13 @@ export default function GetFileStory() {
                 ...fileAdditionallyMenuPopUpShow,
                 [id]: true,
             });
+            setCloseBackgroundAdditionallyMenu(true);
         } else {
             setFileAdditionallyMenuPopUpShow({
                 ...fileAdditionallyMenuPopUpShow,
                 [id]: false,
             });
+            setCloseBackgroundAdditionallyMenu(false);
         }
     };
 
@@ -537,6 +564,8 @@ export default function GetFileStory() {
                 ...prevState,
                 [element.id]: false,
             }));
+
+            setCloseBackgroundAdditionallyMenu(false);
         }
     };
 
@@ -848,6 +877,11 @@ export default function GetFileStory() {
                     </div>
 
                     <div className={style.formFileStoryView}>
+                        <div
+                            className={` ${style.closeBackgroundAdditionallyMenu} ${closeBackgroundAdditionallyMenu == true ? style.closeBackgroundAdditionallyMenuShow : ''}`}
+                            onClick={() => closeAllFileAdditionallyMenuFun()}
+                        ></div>
+
                         <div className={style.formFileStoryHead}>
                             <h2>{intl.formatMessage({ id: 'getFileStory.formFileStoryHeadH2' })}</h2>
 
@@ -891,7 +925,7 @@ export default function GetFileStory() {
                                 <span className={style.error}>{error}</span>
                             </div>
                         ) : (
-                            <div></div>
+                            <></>
                         )}
 
                         <div className={style.inputSearchBlock}>

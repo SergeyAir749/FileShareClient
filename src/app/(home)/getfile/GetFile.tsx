@@ -210,6 +210,17 @@ export default function Getfile() {
             if (userData?.shareId != undefined) {
                 const response = await fileAcceptFunServer(userData?.shareId, id);
 
+                if (response.status == false) {
+                    const serverMessage = response.msg;
+
+                    return setPopUpFilesErrorMessage(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
+                }
+
                 const link = document.createElement('a');
                 link.download = String(filename);
 
@@ -252,6 +263,17 @@ export default function Getfile() {
                 const response = await textCopyFunServer(userData?.shareId, id);
                 //console.log(response.data);
 
+                if (response.status == false) {
+                    const serverMessage = response.msg;
+
+                    return setPopUpFilesErrorMessage(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
+                }
+
                 const newFiles = files.filter((item) => item.id != id);
                 if (JSON.stringify(newFiles) == JSON.stringify([])) {
                     setShowFilePopUp(false);
@@ -291,6 +313,17 @@ export default function Getfile() {
 
                     if (userData?.shareId != undefined) {
                         const response = await textCopyFunServer(userData?.shareId, files[i].id);
+
+                        if (response.status == false) {
+                            const serverMessage = response.msg;
+
+                            return setPopUpFilesErrorMessage(
+                                intl.formatMessage({
+                                    id: `error.massage.${serverMessage}`,
+                                    defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                                })
+                            );
+                        }
                         //console.log(response.data);
 
                         const newFiles = files.filter((item) => item.id != files[i].id);
@@ -327,6 +360,17 @@ export default function Getfile() {
 
                     if (userData?.shareId != undefined) {
                         const response = await fileAcceptFunServer(userData?.shareId, files[i].id);
+
+                        if (response.status == false) {
+                            const serverMessage = response.msg;
+
+                            return setPopUpFilesErrorMessage(
+                                intl.formatMessage({
+                                    id: `error.massage.${serverMessage}`,
+                                    defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                                })
+                            );
+                        }
 
                         const link = document.createElement('a');
                         link.download = String(files[i].filename);
@@ -372,6 +416,17 @@ export default function Getfile() {
             if (userData?.shareId != undefined) {
                 const response = await allFilesCancelFunServer(userData?.shareId);
                 setFiles([]);
+
+                if (response.status == false) {
+                    const serverMessage = response.msg;
+
+                    return setPopUpFilesErrorMessage(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
+                }
             }
             //console.log(response.data);
 
@@ -382,7 +437,7 @@ export default function Getfile() {
 
             const serverMessage = error.message;
 
-            setPopUpFilesErrorMessage(
+            return setPopUpFilesErrorMessage(
                 intl.formatMessage({
                     id: `error.massage.${serverMessage}`,
                     defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
@@ -395,10 +450,22 @@ export default function Getfile() {
         try {
             if (userData?.shareId != undefined) {
                 const response = await fileCancelFunServer(userData?.shareId, id);
-                //console.log(response.data);
+                console.log('response:', response);
 
                 if (JSON.stringify(response.data) == JSON.stringify([])) {
                     setShowFilePopUp(false);
+                }
+
+                if (response.status == false) {
+                    const serverMessage = response.msg;
+                    console.log('serverMessage:', serverMessage);
+
+                    return setPopUpFilesErrorMessage(
+                        intl.formatMessage({
+                            id: `error.massage.${serverMessage}`,
+                            defaultMessage: intl.formatMessage({ id: 'error.massage.unknown' }) + serverMessage,
+                        })
+                    );
                 }
             }
 

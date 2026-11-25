@@ -623,7 +623,8 @@
 
 .inputFilters {
     background-color: var(--color-file-cart-bg);
-    border: 1px solid var(--color-gray-600);
+    /* border: 1px solid var(--color-gray-600); */
+    border: none;
     color: var(--color-text);
     border-radius: 100px;
     padding: 12px 15px;
@@ -638,7 +639,8 @@
 
 .inputFiltersText {
     background-color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-900);
+    /* border: 1px solid var(--color-gray-900); */
+    border: none;
     color: var(--color-text);
     border-radius: 100px;
     padding: 12px 15px;
@@ -653,7 +655,8 @@
 
 .inputFiltersDate {
     background-color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-900);
+    /* border: 1px solid var(--color-gray-900); */
+    border: none;
     color: var(--color-text);
     border-radius: 100px;
     padding: 12px 15px;
@@ -673,7 +676,8 @@
 
 .selectOptionStyle {
     background-color: var(--color-gray-500);
-    border: 1px solid var(--color-gray-900);
+    /* border: 1px solid var(--color-gray-900); */
+    border: none;
     color: var(--color-text);
     font-size: 16px;
     /* color: #9a9a9a; */
@@ -828,7 +832,7 @@
 }
 
 .LinkExchange:hover {
-    background-color: var(--color-gray-500);
+    background-color: var(--color-gray-500-60);
 }
 
 

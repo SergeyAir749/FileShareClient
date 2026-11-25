@@ -30,14 +30,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
     const themeColor = cookiesStore.get('theme')?.value;
 
-    // let lang = cookiesStore.get('language')?.value;
-
-    // if (lang == undefined) {
-    //     lang = 'ru';
-    // }
-
     return (
-        <html lang="ru" suppressHydrationWarning>
+        <html lang="ru" suppressHydrationWarning className={style.htmlStyle}>
             <head>
                 <meta name="google" content="notranslate" />
                 <meta name="apple-mobile-web-app-title" content="Обмен файлами" />
@@ -58,7 +52,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" /> */}
             </head>
             {/* <body className={robotoSans.className}> */}
-            <body>
+            <body className={style.bodyStyle}>
                 <StoreProvider>
                     <IntlWrapper>
                         <div className={style.contenire}>

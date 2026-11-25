@@ -147,7 +147,7 @@ export default function QRCodeLoginSend() {
         }
 
         const QRCodeRoomIsThereFun = async () => {
-            const response = await axios.get(`${soketUrl}/api/QRCodeRoomIsThere/${QRCodeLoginRoomID}`);
+            const response = await axios.get(`${soketUrl}/api/login/QRCode/RoomIsThere/${QRCodeLoginRoomID}`);
             console.log(response);
             const roomIsThereResponse = response.data.RoomIsThere;
 

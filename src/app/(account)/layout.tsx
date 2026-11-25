@@ -59,20 +59,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 const serverMessage = error.response.data.error;
                 console.log(error);
 
-                // if (location.pathname != '/delete/successfully') {
-                //     signupGuest();
-                // } else if (serverMessage == 'Не удалось войти в аккаунт') {
-                //     signupGuest();
-                // } else if (serverMessage == 'Почта не верифицирована') {
-                //     router.push('/signup/email/verification');
-                // } else if (serverMessage == 'Что-то пошло не так') {
-                //     signupGuest();
-                // } else if (serverMessage == 'Аккаунт удалён') {
-                //     signupGuest();
-                // } else {
-                //     console.log(serverMessage);
-                // }
-
                 console.log(serverMessage == 'UnableToSignInToTheAccount');
 
                 if (serverMessage == 'UnableToSignInToTheAccount') {

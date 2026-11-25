@@ -10,7 +10,7 @@ export const valueShareIdServer = async (valueShareId: string) => {
 
     try {
         const response = await axios.get(fileApiUrl + '/api/getUserDataById/' + valueShareId);
-        console.log(response);
+        console.log("response:", response);
         return response.data
     } catch (error) {
 
@@ -19,78 +19,11 @@ export const valueShareIdServer = async (valueShareId: string) => {
         if (axios.isAxiosError(error)) {
             const serverMessage = error;
             if (serverMessage.response?.data?.msg != undefined) {
-                console.log(serverMessage.response?.data?.msg);
-                if (serverMessage.response?.data?.msg == 'Пользователь не найден') {
-                    throw new Error('Пользователь не найден');
-                }
+                console.log("error:", serverMessage.response?.data?.msg);
+                return {status: false, msg: serverMessage.response?.data?.msg};
             } else {
-                throw new Error(serverMessage.message);
-            }
-        }
-    }
-};
-
-
-export const upLoadFilesServer = async (shareId: string, formData: FormData) => {
-    
-    const cookiesStore = await cookies();
-    const token = cookiesStore.get("token")?.value;
-
-    try {
-        const response = await axios.post(fileApiUrl + '/api/fileLoad/' + shareId, formData, {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data
-    } catch (error) {
-
-        console.log(error);
-        
-          if (axios.isAxiosError(error)) {
-            const serverMessage = error;
-            //console.log(serverMessage);
-
-            if (serverMessage.response?.data?.msg != undefined) {
-                console.log(serverMessage.response?.data?.msg);
-                throw new Error(serverMessage.response?.data?.msg);
-            } else {
-                console.log(serverMessage.message);
-                throw new Error(serverMessage.message);
-            }
-        }
-    }
-};
-
-
-export const upLoadTextServer = async (shareId: string, formData: object) => {
-    
-    const cookiesStore = await cookies();
-    const token = cookiesStore.get("token")?.value;
-
-    try {
-        const response = await axios.post(fileApiUrl + '/api/textLoad/' + shareId, formData, {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`,
-            },
-        });
-
-        return response.data
-    } catch (error) {
-
-        console.log(error);
-        
-          if (axios.isAxiosError(error)) {
-            const serverMessage = error;
-            //console.log(serverMessage);
-
-            if (serverMessage.response?.data?.msg != undefined) {
-                console.log(serverMessage.response?.data?.msg);
-                throw new Error(serverMessage.response?.data?.msg);
-            } else {
-                console.log(serverMessage.message);
-                throw new Error(serverMessage.message);
+                // throw new Error(serverMessage.message);
+                return {status: false, msg: serverMessage.message};
             }
         }
     }
